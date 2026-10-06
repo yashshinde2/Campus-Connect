@@ -1,0 +1,31 @@
+<h3 class="fw-bold mb-4">Community Content Moderation</h3>
+<div class="card card-custom p-4">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Topic</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% posts.forEach(p => { %>
+                    <tr>
+                        <td class="fw-bold"><%= p.title %></td>
+                        <td><span class="badge bg-light text-dark border"><%= p.topic %></span></td>
+                        <td><%= p.author ? p.author.name : 'Unknown' %></td>
+                        <td><%= new Date(p.createdAt).toLocaleDateString() %></td>
+                        <td>
+                            <form action="/admin/community/<%= p._id %>/delete" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete post?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

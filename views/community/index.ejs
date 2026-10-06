@@ -1,0 +1,47 @@
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2 class="fw-bold mb-1">Community Discussions</h2>
+        <p class="text-muted small mb-0">Ask questions, share project ideas, and discuss academic topics with peers</p>
+    </div>
+    <div class="col-md-6 d-flex gap-2">
+        <form action="/community" method="GET" class="d-flex gap-2 flex-grow-1">
+            <input type="text" name="search" class="form-control" placeholder="Search posts..." value="<%= currentSearch %>">
+            <button type="submit" class="btn btn-primary-gradient"><i class="bi bi-search"></i></button>
+        </form>
+        <a href="/community/create" class="btn btn-primary-gradient text-nowrap"><i class="bi bi-plus-lg me-1"></i> New Post</a>
+    </div>
+</div>
+
+<!-- Posts Feed -->
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <% if (posts && posts.length > 0) { %>
+            <% posts.forEach(post => { %>
+                <div class="card card-custom p-4 mb-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="avatar-initials">
+                            <%= post.author ? post.author.name.charAt(0).toUpperCase() : 'U' %>
+                        </div>
+                        <div>
+                            <div class="fw-bold"><%= post.author ? post.author.name : 'Student' %></div>
+                            <small class="text-muted"><%= new Date(post.createdAt).toLocaleDateString() %></small>
+                        </div>
+                        <span class="badge bg-light text-primary border ms-auto"><%= post.topic %></span>
+                    </div>
+
+                    <h5 class="fw-bold mb-2">
+                        <a href="/community/<%= post._id %>" class="text-dark text-decoration-none"><%= post.title %></a>
+                    </h5>
+                    <p class="text-muted small mb-3"><%= post.content.substring(0, 150) %>...</p>
+
+                    <div class="d-flex align-items-center gap-4 border-top pt-3 small text-muted">
+                        <span><i class="bi bi-chat-square-text me-1"></i> <%= post.commentCount %> Comments</span>
+                        <a href="/community/<%= post._id %>" class="btn btn-sm btn-soft ms-auto">Read Discussion <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="text-center py-5 text-muted">No community discussions found.</div>
+        <% } %>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card card-custom p-4 p-md-5 mb-4">
+            <h3 class="fw-bold mb-2"><%= group.name %></h3>
+            <p class="text-muted mb-4"><%= group.description %></p>
+            <div class="border-top pt-3">
+                <h5 class="fw-bold mb-3">Members (<%= group.members.length %>)</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <% group.members.forEach(m => { %>
+                        <span class="badge bg-light text-dark border p-2"><i class="bi bi-person me-1 text-primary"></i> <%= m.name %></span>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Admin Panel Overview</h2>
+        <p class="text-muted small mb-0">Platform control, user management, and content moderation</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="/admin/export/users" class="btn btn-outline-secondary btn-sm"><i class="bi bi-download me-1"></i> Export Students CSV</a>
+    </div>
+</div>
+
+<!-- Admin Stat Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card card-custom p-3 bg-white">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icon-tile icon-tile-gradient"><i class="bi bi-people"></i></div>
+                <div>
+                    <h3 class="fw-bold mb-0"><%= stats.studentCount %></h3>
+                    <small class="text-muted">Registered Students</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-custom p-3 bg-white">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icon-tile bg-warning-subtle text-warning"><i class="bi bi-folder-symlink"></i></div>
+                <div>
+                    <h3 class="fw-bold mb-0"><%= stats.pendingResourceCount %></h3>
+                    <small class="text-muted">Pending Moderations</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-custom p-3 bg-white">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icon-tile bg-indigo-subtle text-indigo"><i class="bi bi-megaphone"></i></div>
+                <div>
+                    <h3 class="fw-bold mb-0"><%= stats.noticeCount %></h3>
+                    <small class="text-muted">Total Notices</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-custom p-3 bg-white">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icon-tile bg-violet-subtle text-violet"><i class="bi bi-calendar-event"></i></div>
+                <div>
+                    <h3 class="fw-bold mb-0"><%= stats.totalEventCount %></h3>
+                    <small class="text-muted">Total Events</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Navigation Bar -->
+<div class="card card-custom p-3 mb-4">
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/admin/notices" class="btn btn-sm btn-soft"><i class="bi bi-megaphone me-1"></i> Notices</a>
+        <a href="/admin/events" class="btn btn-sm btn-soft"><i class="bi bi-calendar-event me-1"></i> Events</a>
+        <a href="/admin/users" class="btn btn-sm btn-soft"><i class="bi bi-people me-1"></i> Users</a>
+        <a href="/admin/resources" class="btn btn-sm btn-soft"><i class="bi bi-folder2-open me-1"></i> Resource Moderation</a>
+        <a href="/admin/community" class="btn btn-sm btn-soft"><i class="bi bi-chat-square-text me-1"></i> Community Moderation</a>
+        <a href="/admin/messages" class="btn btn-sm btn-soft"><i class="bi bi-envelope me-1"></i> Contact Messages</a>
+        <a href="/admin/settings" class="btn btn-sm btn-soft"><i class="bi bi-gear me-1"></i> Site Settings</a>
+        <a href="/admin/logs" class="btn btn-sm btn-soft"><i class="bi bi-journal-text me-1"></i> Activity Logs</a>
+    </div>
+</div>

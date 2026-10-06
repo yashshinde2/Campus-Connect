@@ -1,0 +1,115 @@
+<div class="row justify-content-center align-items-center min-vh-75">
+    <div class="col-md-7 col-lg-6">
+        <div class="card card-custom p-4 shadow-lg">
+            <div class="text-center mb-4">
+                <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem;">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+                <h3 class="fw-bold">Student Registration</h3>
+                <p class="text-muted small">Join your campus digital portal in 3 simple steps</p>
+            </div>
+
+            <form action="/auth/signup" method="POST" id="signupForm">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input type="text" name="name" class="form-control" id="floatingName" placeholder="Full Name" required>
+                            <label for="floatingName">Full Name</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@campusconnect.edu" required>
+                            <label for="floatingEmail">Institutional Email</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating position-relative">
+                            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating position-relative">
+                            <input type="password" name="confirmPassword" class="form-control" id="floatingConfirmPassword" placeholder="Confirm Password" required>
+                            <label for="floatingConfirmPassword">Confirm Password</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select name="course" class="form-select" id="floatingCourse" required>
+                                <option value="">Select Course</option>
+                                <option value="B.Tech">B.Tech</option>
+                                <option value="M.Tech">M.Tech</option>
+                                <option value="BCA">BCA</option>
+                                <option value="MCA">MCA</option>
+                                <option value="B.Sc">B.Sc</option>
+                                <option value="MBA">MBA</option>
+                            </select>
+                            <label for="floatingCourse">Course</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select name="department" class="form-select" id="floatingDept" required>
+                                <option value="">Select Department</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Mechanical">Mechanical</option>
+                                <option value="Business Admin">Business Admin</option>
+                            </select>
+                            <label for="floatingDept">Department</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select name="year" class="form-select" id="floatingYear">
+                                <option value="1">Year 1</option>
+                                <option value="2">Year 2</option>
+                                <option value="3">Year 3</option>
+                                <option value="4">Year 4</option>
+                            </select>
+                            <label for="floatingYear">Academic Year</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select name="semester" class="form-select" id="floatingSem">
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                                <option value="3">Semester 3</option>
+                                <option value="4">Semester 4</option>
+                                <option value="5">Semester 5</option>
+                                <option value="6">Semester 6</option>
+                            </select>
+                            <label for="floatingSem">Semester</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <textarea name="bio" class="form-control" id="floatingBio" style="height: 80px;" placeholder="Bio"></textarea>
+                            <label for="floatingBio">Short Bio (Optional)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary-gradient w-100 py-2 fs-6 mt-4">
+                    Create Account <i class="bi bi-check-circle ms-1"></i>
+                </button>
+            </form>
+
+            <div class="text-center mt-3 small text-muted">
+                Already registered? <a href="/auth/login" class="text-primary fw-bold text-decoration-none">Sign In</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">Manage Campus Notices</h3>
+    <button class="btn btn-primary-gradient" data-bs-toggle="modal" data-bs-target="#createNoticeModal">
+        <i class="bi bi-plus-lg me-1"></i> Create Notice
+    </button>
+</div>
+
+<div class="card card-custom p-4">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Pinned</th>
+                    <th>Urgent</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% notices.forEach(n => { %>
+                    <tr>
+                        <td class="fw-bold"><%= n.title %></td>
+                        <td><span class="badge badge-category badge-<%= n.category.toLowerCase() %>"><%= n.category %></span></td>
+                        <td><%= n.isPinned ? 'Yes' : 'No' %></td>
+                        <td><%= n.isUrgent ? 'Yes' : 'No' %></td>
+                        <td><%= new Date(n.createdAt).toLocaleDateString() %></td>
+                        <td>
+                            <form action="/admin/notices/<%= n._id %>/delete" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete notice?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="createNoticeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/notices" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Create Campus Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select name="category" class="form-select" required>
+                            <option value="Academic">Academic</option>
+                            <option value="Exam">Exam</option>
+                            <option value="Event">Event</option>
+                            <option value="General">General</option>
+                            <option value="Placement">Placement</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" name="isPinned" class="form-check-input" id="pinCheck">
+                        <label class="form-check-label" for="pinCheck">Pin to Top</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" name="isUrgent" class="form-check-input" id="urgCheck">
+                        <label class="form-check-label" for="urgCheck">Mark as Urgent</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary-gradient">Publish Notice</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+<!-- Hero Section -->
+<div class="row align-items-center py-5 my-3 position-relative">
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3">
+            <i class="bi bi-stars me-1"></i> Unified Campus Collaboration
+        </span>
+        <h1 class="display-4 fw-extrabold mb-3">
+            Your campus, <span class="text-gradient">all in one place.</span>
+        </h1>
+        <p class="lead text-muted mb-4">
+            Stay ahead with official notices, upcoming campus events, peer-shared study hub notes, and vibrant community discussions.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="/auth/signup" class="btn btn-primary-gradient btn-lg px-4 py-3">
+                Join Community <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+            <a href="/about" class="btn btn-soft btn-lg px-4 py-3">
+                Explore Features <i class="bi bi-compass ms-1"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-6 text-center">
+        <div class="position-relative">
+            <div class="card card-custom p-4 shadow-lg text-start mx-auto" style="max-width: 450px;">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="icon-tile icon-tile-gradient rounded-circle" style="width: 36px; height: 36px; font-size: 0.95rem;">
+                            <i class="bi bi-megaphone"></i>
+                        </div>
+                        <span class="fw-bold">Latest Urgent Notice</span>
+                    </div>
+                    <span class="badge badge-exam">Exam</span>
+                </div>
+                <h6 class="fw-bold">End Semester Examination Schedule</h6>
+                <p class="small text-muted mb-2">Timetable for all engineering departments released by the academic council.</p>
+                <div class="d-flex align-items-center justify-content-between small text-muted border-top pt-2">
+                    <span><i class="bi bi-clock me-1"></i> 2 hours ago</span>
+                    <span class="badge bg-light text-dark border">Official</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Live Stats Strip -->
+<div class="row g-3 py-4 my-4 bg-white rounded-4 shadow-sm border text-center">
+    <div class="col-6 col-md-3">
+        <h2 class="fw-bold text-primary mb-0 stat-counter" data-target="<%= stats.studentCount %>">0</h2>
+        <small class="text-muted fw-semibold">Active Students</small>
+    </div>
+    <div class="col-6 col-md-3">
+        <h2 class="fw-bold text-indigo mb-0 stat-counter" data-target="<%= stats.noticeCount %>">0</h2>
+        <small class="text-muted fw-semibold">Official Notices</small>
+    </div>
+    <div class="col-6 col-md-3">
+        <h2 class="fw-bold text-cyan mb-0 stat-counter" data-target="<%= stats.resourceCount %>">0</h2>
+        <small class="text-muted fw-semibold">Study Resources</small>
+    </div>
+    <div class="col-6 col-md-3">
+        <h2 class="fw-bold text-violet mb-0 stat-counter" data-target="<%= stats.eventCount %>">0</h2>
+        <small class="text-muted fw-semibold">Campus Events</small>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-5">
+    <div class="text-center max-w-xl mx-auto mb-5">
+        <h2 class="fw-bold">Everything You Need for Campus Success</h2>
+        <p class="text-muted">Designed specifically to streamline student communication, resources, and event updates.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card card-custom p-4 h-100">
+                <div class="icon-tile icon-tile-gradient mb-3">
+                    <i class="bi bi-megaphone"></i>
+                </div>
+                <h5 class="fw-bold">Real-time Notices</h5>
+                <p class="text-muted small">Never miss an urgent deadline or exam announcement. Filter by category, search, and bookmark essential notices.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-custom p-4 h-100">
+                <div class="icon-tile icon-tile-gradient mb-3">
+                    <i class="bi bi-calendar-event"></i>
+                </div>
+                <h5 class="fw-bold">Event Management</h5>
+                <p class="text-muted small">RSVP to workshops, tech fests, and cultural events. Download `.ics` calendar files directly to your device.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-custom p-4 h-100">
+                <div class="icon-tile icon-tile-gradient mb-3">
+                    <i class="bi bi-folder2-open"></i>
+                </div>
+                <h5 class="fw-bold">Peer Study Hub</h5>
+                <p class="text-muted small">Share and download verified semester notes, past question papers, and presentation decks approved by admins.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Accordion -->
+<div class="py-5 bg-white rounded-4 p-4 p-md-5 border shadow-sm my-4">
+    <h3 class="fw-bold text-center mb-4">Frequently Asked Questions</h3>
+    <div class="accordion accordion-flush" id="faqAccordion">
+        <div class="accordion-item border-0 border-bottom">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    Who can register for Campus Connect?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    All currently enrolled students and faculty members with valid campus email credentials can register.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item border-0 border-bottom">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    How does the Study Hub resource moderation work?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                    When a student uploads notes or documents, it enters a pending state. Platform administrators review and approve files to ensure high academic quality before publication.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
