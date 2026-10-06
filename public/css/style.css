@@ -284,6 +284,14 @@ h4, .fs-title-3 { font-size: clamp(1.15rem, 1.8vw, 1.35rem); font-weight: 700; }
   border-color: rgba(37, 99, 235, 0.35);
 }
 
+/* Theme Toggle Icon Display */
+html[data-theme="dark"] .d-none-dark { display: none !important; }
+html:not([data-theme="dark"]) .d-none-light { display: none !important; }
+
+[data-theme="dark"] .dark-text-light {
+  color: var(--text) !important;
+}
+
 /* Theme Toggle Button */
 .btn-theme-toggle {
   width: 38px;
@@ -302,6 +310,12 @@ h4, .fs-title-3 { font-size: clamp(1.15rem, 1.8vw, 1.35rem); font-weight: 700; }
   border-color: var(--primary);
   color: var(--primary);
   transform: rotate(20deg) scale(1.05);
+}
+
+@media (max-width: 991px) {
+  .nav-indicator {
+    display: none !important;
+  }
 }
 
 /* Quick Search Trigger Button */

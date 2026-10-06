@@ -1,26 +1,22 @@
-<div class="container py-5">
-    <div class="row justify-content-center align-items-center min-vh-75">
-        <div class="col-md-5 col-lg-4">
-            <div class="bento-card spotlight-card p-4 p-md-5 text-center">
-                <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; font-size: 1.3rem;">
-                    <i class="bi bi-key"></i>
-                </div>
-                <h3 class="fw-extrabold font-heading mb-2">Forgot Password</h3>
-                <p class="text-secondary-custom small mb-4">Enter your institutional email to receive a password reset link.</p>
-
-                <form action="/auth/forgot" method="POST">
-                    <div class="form-floating mb-3 text-start">
-                        <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@campusconnect.edu" required>
-                        <label for="floatingEmail">Institutional Email</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-aurora btn-shine w-100 py-3 justify-content-center mb-3">
-                        Send Reset Link <i class="bi bi-send ms-1"></i>
-                    </button>
-                </form>
-
-                <a href="/auth/login" class="small text-secondary-custom text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Login</a>
-            </div>
+<div class="d-flex align-items-center justify-content-center min-vh-80 py-4">
+    <div class="bento-card spotlight-card p-4 p-sm-5 shadow-lg border-hairline w-100 mx-auto text-center" style="max-width: 460px;">
+        <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 56px; height: 56px; font-size: 1.4rem;">
+            <i class="bi bi-key"></i>
         </div>
+        <h2 class="fw-extrabold font-heading mb-2">Forgot Password</h2>
+        <p class="text-secondary-custom small mb-4">Enter your institutional email to receive a password reset link.</p>
+
+        <form action="/auth/forgot" method="POST">
+            <div class="form-floating mb-3 text-start">
+                <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@campusconnect.edu" required autocomplete="email">
+                <label for="floatingEmail">Institutional Email</label>
+            </div>
+
+            <button type="submit" class="btn btn-aurora btn-shine w-100 py-3 justify-content-center mb-3">
+                Send Reset Link <i class="bi bi-send ms-1"></i>
+            </button>
+        </form>
+
+        <a href="/auth/login" class="small text-secondary-custom text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Login</a>
     </div>
 </div>
