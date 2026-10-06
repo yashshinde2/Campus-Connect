@@ -1,10 +1,10 @@
-// Main entry point for client-side JavaScript modules
+// Main entry point for Campus Connect Client-Side Interactivity
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Glass Navbar Scroll Effect
+    // 1. Glass Navbar Scroll Effect & Sliding Active Indicator
     const navbar = document.querySelector('.navbar-glass');
     if (navbar) {
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
+            if (window.scrollY > 15) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
@@ -12,154 +12,185 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Animated Stat Counters
-    const counters = document.querySelectorAll('.stat-counter');
-    if (counters.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = +counter.getAttribute('data-target');
-                    let count = 0;
-                    const speed = target / 50;
+    // Sliding indicator on navbar
+    const navContainer = document.querySelector('.navbar-nav-container');
+    if (navContainer) {
+        let indicator = navContainer.querySelector('.nav-indicator');
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.className = 'nav-indicator';
+            navContainer.appendChild(indicator);
+        }
 
-                    const updateCount = () => {
-                        count += speed;
-                        if (count < target) {
-                            counter.innerText = Math.ceil(count);
-                            setTimeout(updateCount, 30);
-                        } else {
-                            counter.innerText = target;
-                        }
-                    };
-                    updateCount();
-                    observer.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.5 });
+        const activeLink = navContainer.querySelector('.nav-link-aurora.active');
+        function moveIndicator(target) {
+            if (!target || !indicator) return;
+            const containerRect = navContainer.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            indicator.style.width = `${targetRect.width}px`;
+            indicator.style.left = `${targetRect.left - containerRect.left}px`;
+            indicator.style.opacity = '1';
+        }
 
-        counters.forEach(c => observer.observe(c));
+        if (activeLink) {
+            moveIndicator(activeLink);
+        } else {
+            if (indicator) indicator.style.opacity = '0';
+        }
+
+        const navLinks = navContainer.querySelectorAll('.nav-link-aurora');
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => moveIndicator(link));
+        });
+
+        navContainer.addEventListener('mouseleave', () => {
+            if (activeLink) moveIndicator(activeLink);
+            else if (indicator) indicator.style.opacity = '0';
+        });
     }
 
-    // 3. Password Toggle Visibility
+    // 2. Announcement Bar Dismissal (Persisted)
+    const announcementBar = document.getElementById('siteAnnouncementBar');
+    const dismissAnnouncement = document.getElementById('dismissAnnouncement');
+    if (announcementBar && dismissAnnouncement) {
+        const isDismissed = localStorage.getItem('announcement_dismissed_v1');
+        if (isDismissed === 'true') {
+            announcementBar.style.display = 'none';
+        } else {
+            dismissAnnouncement.addEventListener('click', () => {
+                announcementBar.style.display = 'none';
+                localStorage.setItem('announcement_dismissed_v1', 'true');
+            });
+        }
+    }
+
+    // 3. Password Toggle & Password Strength Meter
     const togglePassButtons = document.querySelectorAll('.toggle-password');
     togglePassButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            const input = document.querySelector(btn.getAttribute('data-target'));
+            const targetId = btn.getAttribute('data-target');
+            const input = document.querySelector(targetId);
             if (input) {
                 const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
                 input.setAttribute('type', type);
-                btn.querySelector('i').classList.toggle('bi-eye');
-                btn.querySelector('i').classList.toggle('bi-eye-slash');
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('bi-eye');
+                    icon.classList.toggle('bi-eye-slash');
+                }
             }
         });
     });
 
-    // 4. Live Search AJAX Overlay
-    const searchTrigger = document.querySelector('#searchTrigger');
-    const searchOverlay = document.querySelector('#searchOverlay');
-    const searchInput = document.querySelector('#searchInput');
-    const searchResults = document.querySelector('#searchResults');
+    const passwordInput = document.getElementById('passwordInput');
+    const strengthMeter = document.getElementById('passwordStrengthMeter');
+    const strengthText = document.getElementById('passwordStrengthText');
 
-    if (searchTrigger && searchOverlay) {
-        searchTrigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            searchOverlay.classList.remove('d-none');
-            if (searchInput) searchInput.focus();
+    if (passwordInput && strengthMeter) {
+        passwordInput.addEventListener('input', () => {
+            const val = passwordInput.value;
+            let score = 0;
+            if (val.length >= 8) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+
+            const colors = ['bg-danger', 'bg-warning', 'bg-info', 'bg-success'];
+            const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+            const percent = (score / 4) * 100;
+
+            strengthMeter.style.width = `${percent}%`;
+            strengthMeter.className = `progress-bar ${colors[score - 1] || 'bg-danger'}`;
+            if (strengthText) strengthText.innerText = val ? labels[score - 1] || 'Weak' : '';
         });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-                e.preventDefault();
-                searchOverlay.classList.remove('d-none');
-                if (searchInput) searchInput.focus();
-            }
-            if (e.key === 'Escape' && !searchOverlay.classList.contains('d-none')) {
-                searchOverlay.classList.add('d-none');
-            }
-        });
-
-        const closeSearch = document.querySelector('#closeSearch');
-        if (closeSearch) {
-            closeSearch.addEventListener('click', () => searchOverlay.classList.add('d-none'));
-        }
-
-        if (searchInput && searchResults) {
-            let debounceTimer;
-            searchInput.addEventListener('input', () => {
-                clearTimeout(debounceTimer);
-                const query = searchInput.value.trim();
-                if (query.length < 2) {
-                    searchResults.innerHTML = '<div class="text-center text-muted p-3">Type at least 2 characters to search...</div>';
-                    return;
-                }
-
-                debounceTimer = setTimeout(async () => {
-                    try {
-                        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-                        const data = await res.json();
-                        
-                        if (!data.results || data.results.length === 0) {
-                            searchResults.innerHTML = '<div class="text-center text-muted p-3">No results found.</div>';
-                            return;
-                        }
-
-                        searchResults.innerHTML = data.results.map(item => `
-                            <a href="${item.url}" class="list-group-item list-group-item-action border-0 mb-1 rounded-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">${item.title}</span>
-                                    <span class="badge bg-light text-primary border">${item.type}</span>
-                                </div>
-                                <small class="text-muted d-block text-truncate">${item.snippet}</small>
-                            </a>
-                        `).join('');
-                    } catch (err) {
-                        searchResults.innerHTML = '<div class="text-center text-danger p-3">Search error occurred.</div>';
-                    }
-                }, 300);
-            });
-        }
     }
 
-    // 5. Global AJAX Handlers (Bookmark, RSVP, Like, Group Join)
+    // 4. Global AJAX Handlers (Bookmark, RSVP, Like, Copy Link)
     document.addEventListener('click', async (e) => {
-        // Bookmark Toggle
-        if (e.target.closest('.btn-bookmark')) {
-            const btn = e.target.closest('.btn-bookmark');
-            const id = btn.getAttribute('data-id');
+        // Bookmark Toggle Button
+        const bookmarkBtn = e.target.closest('.btn-bookmark');
+        if (bookmarkBtn) {
+            e.preventDefault();
+            const id = bookmarkBtn.getAttribute('data-id');
             try {
                 const res = await fetch(`/api/bookmark/${id}`, { method: 'POST' });
                 const data = await res.json();
                 if (data.success) {
-                    const icon = btn.querySelector('i');
-                    if (data.bookmarked) {
-                        icon.className = 'bi bi-bookmark-fill text-primary';
-                    } else {
-                        icon.className = 'bi bi-bookmark text-muted';
+                    const icon = bookmarkBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = data.bookmarked ? 'bi bi-bookmark-fill text-primary' : 'bi bi-bookmark text-muted';
+                    }
+                    if (window.showToast) {
+                        window.showToast(data.bookmarked ? 'Saved to bookmarks' : 'Removed from bookmarks', 'info');
                     }
                 }
             } catch (err) { console.error(err); }
         }
 
-        // RSVP Toggle
-        if (e.target.closest('.btn-rsvp')) {
-            const btn = e.target.closest('.btn-rsvp');
-            const id = btn.getAttribute('data-id');
+        // RSVP Toggle Button
+        const rsvpBtn = e.target.closest('.btn-rsvp');
+        if (rsvpBtn) {
+            e.preventDefault();
+            const id = rsvpBtn.getAttribute('data-id');
             try {
                 const res = await fetch(`/api/rsvp/${id}`, { method: 'POST' });
                 const data = await res.json();
                 if (data.success) {
                     if (data.isAttending) {
-                        btn.className = 'btn btn-success btn-rsvp';
-                        btn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Attending';
+                        rsvpBtn.className = 'btn btn-success btn-rsvp rounded-pill px-3';
+                        rsvpBtn.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Attending';
                     } else {
-                        btn.className = 'btn btn-primary-gradient btn-rsvp';
-                        btn.innerHTML = '<i class="bi bi-calendar-check me-1"></i> RSVP Event';
+                        rsvpBtn.className = 'btn btn-aurora btn-rsvp rounded-pill px-3';
+                        rsvpBtn.innerHTML = '<i class="bi bi-calendar-check me-1"></i> RSVP Event';
                     }
                     const countEl = document.querySelector(`#attendeeCount-${id}`);
                     if (countEl) countEl.innerText = data.count;
+                    if (window.showToast) {
+                        window.showToast(data.isAttending ? 'RSVP Confirmed!' : 'RSVP Cancelled', data.isAttending ? 'success' : 'info');
+                    }
                 }
             } catch (err) { console.error(err); }
         }
+
+        // Like Button (Community Post)
+        const likeBtn = e.target.closest('.btn-like');
+        if (likeBtn) {
+            e.preventDefault();
+            const id = likeBtn.getAttribute('data-id');
+            try {
+                const res = await fetch(`/community/like/${id}`, { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    const icon = likeBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = data.liked ? 'bi bi-heart-fill text-danger animate-heart-pop' : 'bi bi-heart text-muted';
+                    }
+                    const countEl = likeBtn.querySelector('.like-count');
+                    if (countEl) countEl.innerText = data.likesCount;
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // Copy Link Button
+        const copyBtn = e.target.closest('.btn-copy-link');
+        if (copyBtn) {
+            e.preventDefault();
+            const url = copyBtn.getAttribute('data-url') || window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                if (window.showToast) window.showToast('Link copied to clipboard!', 'success');
+            }).catch(() => {});
+        }
     });
+
+    // 5. IntersectionObserver Scroll Reveal
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
 });

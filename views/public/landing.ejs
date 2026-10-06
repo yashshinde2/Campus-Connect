@@ -1,132 +1,333 @@
-<!-- Hero Section -->
-<div class="row align-items-center py-5 my-3 position-relative">
-    <div class="col-lg-6 mb-4 mb-lg-0">
-        <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3">
-            <i class="bi bi-stars me-1"></i> Unified Campus Collaboration
-        </span>
-        <h1 class="display-4 fw-extrabold mb-3">
-            Your campus, <span class="text-gradient">all in one place.</span>
-        </h1>
-        <p class="lead text-muted mb-4">
-            Stay ahead with official notices, upcoming campus events, peer-shared study hub notes, and vibrant community discussions.
-        </p>
-        <div class="d-flex flex-wrap gap-3">
-            <a href="/auth/signup" class="btn btn-primary-gradient btn-lg px-4 py-3">
-                Join Community <i class="bi bi-arrow-right ms-2"></i>
-            </a>
-            <a href="/about" class="btn btn-soft btn-lg px-4 py-3">
-                Explore Features <i class="bi bi-compass ms-1"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-6 text-center">
-        <div class="position-relative">
-            <div class="card card-custom p-4 shadow-lg text-start mx-auto" style="max-width: 450px;">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="icon-tile icon-tile-gradient rounded-circle" style="width: 36px; height: 36px; font-size: 0.95rem;">
-                            <i class="bi bi-megaphone"></i>
-                        </div>
-                        <span class="fw-bold">Latest Urgent Notice</span>
+<!-- ==================================================
+   AURORA BENTO LANDING PAGE
+   ================================================== -->
+
+<!-- 1. Hero Section with Aurora Mesh & Grid Pattern -->
+<div class="position-relative overflow-hidden rounded-4 mb-5" style="background: var(--aurora); padding: 4rem 1.5rem 6rem 1.5rem; border: 1px solid var(--line);">
+    <!-- Faint dotted grid -->
+    <div class="hero-grid-pattern"></div>
+
+    <!-- Floating Blurred Aurora Blobs -->
+    <div class="position-absolute rounded-circle floating-blob opacity-50" style="width: 320px; height: 320px; background: rgba(37,99,235,0.25); filter: blur(60px); top: -50px; left: -50px; pointer-events: none;"></div>
+    <div class="position-absolute rounded-circle floating-blob opacity-40" style="width: 280px; height: 280px; background: rgba(6,182,212,0.25); filter: blur(60px); bottom: -40px; right: -40px; animation-delay: -4s; pointer-events: none;"></div>
+
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center gy-5">
+            <!-- Left Headline & Call to Actions (State-Aware) -->
+            <div class="col-lg-6">
+                <!-- Announcement Pill -->
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3 border shadow-sm" style="background: var(--surface); border-color: var(--line-strong) !important;">
+                    <span class="badge bg-primary rounded-pill">New</span>
+                    <span class="small fw-semibold text-secondary-custom">Study groups & peer forums are live!</span>
+                    <i class="bi bi-chevron-right small text-muted"></i>
+                </div>
+
+                <!-- Main State-Aware Headline -->
+                <% if (user) { %>
+                    <h1 class="display-4 fw-extrabold mb-3">
+                        Welcome back, <br>
+                        <span class="text-gradient"><%= user.name.split(' ')[0] %>!</span>
+                    </h1>
+                    <p class="lead text-secondary-custom mb-4" style="max-width: 480px;">
+                        Stay updated with your latest campus announcements, upcoming schedule, and peer study groups.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <a href="/dashboard" class="btn btn-aurora btn-shine btn-lg">
+                            <i class="bi bi-grid-1x2-fill"></i> Go to Dashboard
+                        </a>
+                        <a href="/events" class="btn btn-aurora-secondary btn-lg">
+                            <i class="bi bi-calendar-event"></i> Upcoming Events
+                        </a>
                     </div>
-                    <span class="badge badge-exam">Exam</span>
+                <% } else { %>
+                    <h1 class="display-4 fw-extrabold mb-3">
+                        Your campus, <br>
+                        <span class="text-gradient">all in one place.</span>
+                    </h1>
+                    <p class="lead text-secondary-custom mb-4" style="max-width: 480px;">
+                        The ultimate student hub for official notices, campus events, shared study notes, and vibrant academic communities.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <a href="/auth/signup" class="btn btn-aurora btn-shine btn-lg">
+                            Join Community <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <a href="/about" class="btn btn-aurora-secondary btn-lg">
+                            Explore Features <i class="bi bi-compass"></i>
+                        </a>
+                    </div>
+                <% } %>
+
+                <!-- Social Proof Row -->
+                <div class="d-flex align-items-center gap-3 pt-2">
+                    <div class="d-flex align-items-center ms-2">
+                        <div class="avatar-pill border border-2 border-white ms-n2" style="width:34px; height:34px; font-size:0.8rem; background:#2563EB;">JD</div>
+                        <div class="avatar-pill border border-2 border-white ms-n2" style="width:34px; height:34px; font-size:0.8rem; background:#4F46E5;">AS</div>
+                        <div class="avatar-pill border border-2 border-white ms-n2" style="width:34px; height:34px; font-size:0.8rem; background:#06B6D4;">RK</div>
+                        <div class="avatar-pill border border-2 border-white ms-n2" style="width:34px; height:34px; font-size:0.8rem; background:#8B5CF6;">MK</div>
+                    </div>
+                    <div class="small text-secondary-custom">
+                        Join <span class="fw-bold text-dark dark-text-light"><%= stats.studentCount || 1500 %>+</span> students already on campus
+                    </div>
                 </div>
-                <h6 class="fw-bold">End Semester Examination Schedule</h6>
-                <p class="small text-muted mb-2">Timetable for all engineering departments released by the academic council.</p>
-                <div class="d-flex align-items-center justify-content-between small text-muted border-top pt-2">
-                    <span><i class="bi bi-clock me-1"></i> 2 hours ago</span>
-                    <span class="badge bg-light text-dark border">Official</span>
+            </div>
+
+            <!-- Right Composed Interactive Product Preview (HTML frame) -->
+            <div class="col-lg-6">
+                <div class="hero-preview-frame spotlight-card tilt-card">
+                    <!-- Frame Title Bar -->
+                    <div class="d-flex align-items-center justify-content-between pb-3 border-bottom mb-3" style="border-color: var(--line) !important;">
+                        <div class="d-flex gap-1.5">
+                            <span class="rounded-circle bg-danger opacity-75" style="width:10px; height:10px;"></span>
+                            <span class="rounded-circle bg-warning opacity-75" style="width:10px; height:10px;"></span>
+                            <span class="rounded-circle bg-success opacity-75" style="width:10px; height:10px;"></span>
+                        </div>
+                        <span class="small fw-bold text-muted font-heading" style="font-size:0.75rem;">campus-connect.internal/preview</span>
+                        <i class="bi bi-shield-check text-success small"></i>
+                    </div>
+
+                    <!-- Layered Preview Cards -->
+                    <div class="d-flex flex-column gap-3">
+                        <!-- Mini Notice Card -->
+                        <div class="p-3 rounded-3 border bg-surface" style="background: var(--surface-2); border-color: var(--line) !important;">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="badge badge-exam"><i class="bi bi-exclamation-circle me-1"></i> Urgent Notice</span>
+                                <span class="small text-muted">Just Now</span>
+                            </div>
+                            <h6 class="fw-bold mb-1 fs-6">End Semester Examination Timetable 2026</h6>
+                            <p class="small text-secondary-custom mb-0 text-truncate">Final schedules published for Computer Science & IT streams...</p>
+                        </div>
+
+                        <!-- Mini Event & Resource Split Grid -->
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="p-2.5 rounded-3 border bg-surface h-100" style="background: var(--surface-2); border-color: var(--line) !important;">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <div class="bg-primary-subtle text-primary rounded px-2 py-1 fw-bold text-center" style="font-size: 0.75rem; line-height: 1;">
+                                            <div>OCT</div>
+                                            <div class="fs-6">24</div>
+                                        </div>
+                                        <div class="text-truncate">
+                                            <div class="fw-bold small text-truncate">Annual Hackathon</div>
+                                            <div class="text-muted" style="font-size: 0.7rem;">Main Auditorium</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-2.5 rounded-3 border bg-surface h-100" style="background: var(--surface-2); border-color: var(--line) !important;">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="icon-tile text-success p-1" style="width:32px; height:32px; font-size:1rem;"><i class="bi bi-file-earmark-pdf"></i></div>
+                                        <div class="text-truncate">
+                                            <div class="fw-bold small text-truncate">DSA Lecture Notes.pdf</div>
+                                            <div class="text-muted" style="font-size: 0.7rem;">2.4 MB • 140 DLs</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Stats Bar -->
+                        <div class="d-flex align-items-center justify-content-between p-2 rounded-3 bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 small">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span class="fw-semibold">All systems online</span>
+                            </div>
+                            <span class="badge bg-primary text-white rounded-pill">99.9% Uptime</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Live Stats Strip -->
-<div class="row g-3 py-4 my-4 bg-white rounded-4 shadow-sm border text-center">
-    <div class="col-6 col-md-3">
-        <h2 class="fw-bold text-primary mb-0 stat-counter" data-target="<%= stats.studentCount %>">0</h2>
-        <small class="text-muted fw-semibold">Active Students</small>
-    </div>
-    <div class="col-6 col-md-3">
-        <h2 class="fw-bold text-indigo mb-0 stat-counter" data-target="<%= stats.noticeCount %>">0</h2>
-        <small class="text-muted fw-semibold">Official Notices</small>
-    </div>
-    <div class="col-6 col-md-3">
-        <h2 class="fw-bold text-cyan mb-0 stat-counter" data-target="<%= stats.resourceCount %>">0</h2>
-        <small class="text-muted fw-semibold">Study Resources</small>
-    </div>
-    <div class="col-6 col-md-3">
-        <h2 class="fw-bold text-violet mb-0 stat-counter" data-target="<%= stats.eventCount %>">0</h2>
-        <small class="text-muted fw-semibold">Campus Events</small>
+<!-- 2. Live Stats Strip (Overlapping edge, count-up animation, SVG sparklines) -->
+<div class="container mb-5" style="margin-top: -3.5rem; position: relative; z-index: 10;">
+    <div class="row g-3 p-3 rounded-4 spotlight-card" style="background: var(--surface); border: 1px solid var(--line-strong); box-shadow: var(--shadow-hover);">
+        <!-- Stat Tile 1 -->
+        <div class="col-6 col-md-3">
+            <div class="stat-tile d-flex align-items-center gap-3">
+                <div class="icon-tile icon-tile-gradient">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-extrabold mb-0 text-primary counter" data-target="<%= stats.studentCount || 1500 %>">0</h3>
+                    <div class="small text-muted fw-semibold">Active Students</div>
+                </div>
+            </div>
+        </div>
+        <!-- Stat Tile 2 -->
+        <div class="col-6 col-md-3">
+            <div class="stat-tile d-flex align-items-center gap-3">
+                <div class="icon-tile" style="background: rgba(79,70,229,0.12); color: var(--indigo); border-color: rgba(79,70,229,0.2);">
+                    <i class="bi bi-megaphone-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-extrabold mb-0 text-indigo counter" data-target="<%= stats.noticeCount || 120 %>">0</h3>
+                    <div class="small text-muted fw-semibold">Official Notices</div>
+                </div>
+            </div>
+        </div>
+        <!-- Stat Tile 3 -->
+        <div class="col-6 col-md-3">
+            <div class="stat-tile d-flex align-items-center gap-3">
+                <div class="icon-tile" style="background: rgba(6,182,212,0.12); color: var(--cyan); border-color: rgba(6,182,212,0.2);">
+                    <i class="bi bi-folder-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-extrabold mb-0 text-cyan counter" data-target="<%= stats.resourceCount || 450 %>">0</h3>
+                    <div class="small text-muted fw-semibold">Study Resources</div>
+                </div>
+            </div>
+        </div>
+        <!-- Stat Tile 4 -->
+        <div class="col-6 col-md-3">
+            <div class="stat-tile d-flex align-items-center gap-3">
+                <div class="icon-tile" style="background: rgba(139,92,246,0.12); color: var(--violet-accent); border-color: rgba(139,92,246,0.2);">
+                    <i class="bi bi-calendar-event-fill"></i>
+                </div>
+                <div>
+                    <h3 class="fw-extrabold mb-0 counter" style="color: var(--violet-accent);" data-target="<%= stats.eventCount || 85 %>">0</h3>
+                    <div class="small text-muted fw-semibold">Campus Events</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Features Section -->
-<div class="py-5">
+<!-- 3. Feature BENTO GRID (CSS Grid, 6 Columns) -->
+<div class="container py-5">
     <div class="text-center max-w-xl mx-auto mb-5">
-        <h2 class="fw-bold">Everything You Need for Campus Success</h2>
-        <p class="text-muted">Designed specifically to streamline student communication, resources, and event updates.</p>
+        <span class="badge badge-academic mb-2">Platform Capabilities</span>
+        <h2 class="fw-extrabold font-heading">Designed for Modern Campus Life</h2>
+        <p class="text-secondary-custom">Six essential modules built to streamline your academic journey.</p>
     </div>
 
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card card-custom p-4 h-100">
-                <div class="icon-tile icon-tile-gradient mb-3">
-                    <i class="bi bi-megaphone"></i>
+    <div class="bento-grid-6">
+        <!-- Bento 1: Notices Stack (Span 3) -->
+        <div class="bento-card spotlight-card tilt-card" style="grid-column: span 3;">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="icon-tile icon-tile-gradient"><i class="bi bi-megaphone-fill"></i></div>
+                <span class="badge badge-exam">Real-time Stream</span>
+            </div>
+            <h4 class="fw-bold font-heading mb-2">Instant Academic Notices</h4>
+            <p class="text-secondary-custom small mb-4">Urgent exam schedules, administrative decrees, and department circulars delivered immediately with category tags and countdown timers.</p>
+            <div class="p-3 rounded-3 border bg-surface-2 mt-auto" style="border-color: var(--line) !important;">
+                <div class="d-flex align-items-center justify-content-between mb-1">
+                    <span class="badge badge-academic">Academic</span>
+                    <span class="small text-muted">10 mins ago</span>
                 </div>
-                <h5 class="fw-bold">Real-time Notices</h5>
-                <p class="text-muted small">Never miss an urgent deadline or exam announcement. Filter by category, search, and bookmark essential notices.</p>
+                <div class="fw-semibold small">Submission of Mid-Term Lab Reports</div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card card-custom p-4 h-100">
-                <div class="icon-tile icon-tile-gradient mb-3">
-                    <i class="bi bi-calendar-event"></i>
-                </div>
-                <h5 class="fw-bold">Event Management</h5>
-                <p class="text-muted small">RSVP to workshops, tech fests, and cultural events. Download `.ics` calendar files directly to your device.</p>
+
+        <!-- Bento 2: Study Hub (Span 3) -->
+        <div class="bento-card spotlight-card tilt-card" style="grid-column: span 3;">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="icon-tile" style="background: rgba(6,182,212,0.12); color: var(--cyan);"><i class="bi bi-folder2-open"></i></div>
+                <span class="badge badge-placement">Peer Verified</span>
+            </div>
+            <h4 class="fw-bold font-heading mb-2">Peer Study Hub</h4>
+            <p class="text-secondary-custom small mb-4">Access verified lecture notes, previous year question papers, lab manuals, and syllabus files approved by administrators.</p>
+            <div class="d-flex gap-2 flex-wrap mt-auto">
+                <span class="badge bg-surface border text-secondary-custom p-2"><i class="bi bi-file-earmark-pdf text-danger me-1"></i> PDF Notes</span>
+                <span class="badge bg-surface border text-secondary-custom p-2"><i class="bi bi-file-earmark-code text-primary me-1"></i> Lab Code</span>
+                <span class="badge bg-surface border text-secondary-custom p-2"><i class="bi bi-file-earmark-zip text-warning me-1"></i> PYQ Bundles</span>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card card-custom p-4 h-100">
-                <div class="icon-tile icon-tile-gradient mb-3">
-                    <i class="bi bi-folder2-open"></i>
+
+        <!-- Bento 3: Events Calendar (Span 4) -->
+        <div class="bento-card spotlight-card tilt-card" style="grid-column: span 4;">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="icon-tile" style="background: rgba(139,92,246,0.12); color: var(--violet-accent);"><i class="bi bi-calendar-event"></i></div>
+                <span class="badge badge-event">RSVP Enabled</span>
+            </div>
+            <h4 class="fw-bold font-heading mb-2">Events & Tech Fests</h4>
+            <p class="text-secondary-custom small mb-3">Discover hackathons, seminars, and cultural fests with one-click RSVP and instant calendar download (.ics).</p>
+            <div class="d-flex align-items-center gap-3 p-3 rounded-3 border bg-surface-2 mt-auto">
+                <div class="text-center px-3 py-2 rounded-3 bg-primary text-white font-heading">
+                    <div class="small text-uppercase fw-bold opacity-75">NOV</div>
+                    <div class="fs-4 fw-extrabold">12</div>
                 </div>
-                <h5 class="fw-bold">Peer Study Hub</h5>
-                <p class="text-muted small">Share and download verified semester notes, past question papers, and presentation decks approved by admins.</p>
+                <div>
+                    <div class="fw-bold">National Student Tech Summit 2026</div>
+                    <div class="small text-muted"><i class="bi bi-geo-alt me-1"></i> Central Auditorium • 180 seats left</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bento 4: Community & Groups (Span 2) -->
+        <div class="bento-card spotlight-card tilt-card" style="grid-column: span 2;">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="icon-tile" style="background: rgba(16,185,129,0.12); color: var(--success);"><i class="bi bi-chat-square-text"></i></div>
+                <span class="badge badge-general">Active Forum</span>
+            </div>
+            <h4 class="fw-bold font-heading mb-2">Community & Groups</h4>
+            <p class="text-secondary-custom small mb-3">Engage in department discussions and private study groups.</p>
+            <div class="d-flex align-items-center gap-2 mt-auto">
+                <div class="avatar-pill" style="width:32px; height:32px; font-size:0.75rem;">AI</div>
+                <div class="avatar-pill" style="width:32px; height:32px; font-size:0.75rem; background:#4F46E5;">CS</div>
+                <div class="avatar-pill" style="width:32px; height:32px; font-size:0.75rem; background:#06B6D4;">EC</div>
+                <span class="small fw-semibold text-muted ms-1">+40 groups</span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- FAQ Accordion -->
-<div class="py-5 bg-white rounded-4 p-4 p-md-5 border shadow-sm my-4">
-    <h3 class="fw-bold text-center mb-4">Frequently Asked Questions</h3>
-    <div class="accordion accordion-flush" id="faqAccordion">
-        <div class="accordion-item border-0 border-bottom">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                    Who can register for Campus Connect?
-                </button>
-            </h2>
-            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                <div class="accordion-body text-muted">
-                    All currently enrolled students and faculty members with valid campus email credentials can register.
+<!-- 4. Marquee Strip of Department Names -->
+<div class="marquee-container my-4">
+    <div class="marquee-content">
+        <span class="fw-bold text-secondary-custom"><i class="bi bi-cpu me-2 text-primary"></i> Computer Science & Engineering</span>
+        <span class="fw-bold text-secondary-custom"><i class="bi bi-lightning-charge me-2 text-warning"></i> Electrical & Electronics</span>
+        <span class="fw-bold text-secondary-custom"><i class="bi bi-gear me-2 text-indigo"></i> Mechanical Engineering</span>
+        <span class="fw-bold text-secondary-custom"><i class="bi bi-building me-2 text-cyan"></i> Civil & Infrastructure</span>
+        <span class="fw-bold text-secondary-custom"><i class="bi bi-robot me-2 text-violet-accent"></i> AI & Data Science</span>
+        <span class="fw-bold text-secondary-custom"><i class="bi bi-shield-check me-2 text-success"></i> Cybersecurity</span>
+    </div>
+</div>
+
+<!-- 5. FAQ Accordion -->
+<div class="container py-5">
+    <div class="max-w-2xl mx-auto bento-card p-4 p-md-5">
+        <h3 class="fw-extrabold font-heading text-center mb-4">Frequently Asked Questions</h3>
+        <div class="accordion accordion-flush" id="faqAccordion">
+            <div class="accordion-item border-bottom bg-transparent">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed bg-transparent fw-bold text-dark dark-text-light py-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        Who can register for Campus Connect?
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-secondary-custom small">
+                        All currently enrolled students and faculty members with valid campus email credentials can register.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-bottom bg-transparent">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed bg-transparent fw-bold text-dark dark-text-light py-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        How does the Study Hub resource moderation work?
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body text-secondary-custom small">
+                        When a student uploads notes or documents, it enters a pending state. Platform administrators review and approve files to ensure high academic quality before publication.
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="accordion-item border-0 border-bottom">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                    How does the Study Hub resource moderation work?
-                </button>
-            </h2>
-            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                <div class="accordion-body text-muted">
-                    When a student uploads notes or documents, it enters a pending state. Platform administrators review and approve files to ensure high academic quality before publication.
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- 6. Final CTA Band -->
+<div class="container mb-5">
+    <div class="rounded-4 p-5 text-center text-white position-relative overflow-hidden" style="background: var(--grad-primary); box-shadow: var(--shadow-hover);">
+        <div class="position-relative" style="z-index: 2;">
+            <h2 class="display-6 fw-extrabold font-heading mb-3 text-white">Ready to elevate your campus experience?</h2>
+            <p class="lead opacity-90 mb-4 max-w-xl mx-auto">Join thousands of students staying connected, informed, and ahead in their studies.</p>
+            <a href="/auth/signup" class="btn btn-light text-primary fw-bold btn-shine rounded-pill px-5 py-3 fs-5 shadow-lg">
+                Create Free Account <i class="bi bi-arrow-right ms-2"></i>
+            </a>
         </div>
     </div>
 </div>

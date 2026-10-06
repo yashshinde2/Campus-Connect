@@ -1,56 +1,73 @@
-<div class="row g-4">
-    <!-- Profile Info Card -->
-    <div class="col-md-4">
-        <div class="card card-custom p-4 text-center">
-            <div class="avatar-initials mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
-                <%= profile.name.charAt(0).toUpperCase() %>
+<div class="container py-4">
+    <!-- Profile Header Cover -->
+    <div class="rounded-4 position-relative overflow-hidden mb-5 p-4 p-md-5" style="background: var(--grad-primary); color: #FFFFFF;">
+        <div class="position-relative" style="z-index: 2;">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                <div class="avatar-pill border border-4 border-white shadow-lg" style="width: 90px; height: 90px; font-size: 2.2rem;">
+                    <%= profile.name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="text-center text-md-start">
+                    <h1 class="display-6 fw-extrabold font-heading text-white mb-1"><%= profile.name %></h1>
+                    <p class="opacity-90 mb-2"><%= profile.course %> • <%= profile.department %></p>
+                    <span class="badge bg-white text-primary rounded-pill text-capitalize fw-bold px-3 py-1.5"><%= profile.role %> Account</span>
+                </div>
             </div>
-            <h4 class="fw-bold mb-1"><%= profile.name %></h4>
-            <p class="text-muted small mb-2"><%= profile.course %> • <%= profile.department %></p>
-            <span class="badge bg-primary-subtle text-primary mb-3 text-capitalize"><%= profile.role %></span>
-            <p class="small text-muted"><%= profile.bio || 'No bio added yet.' %></p>
         </div>
     </div>
 
-    <!-- Edit Profile & Tabs -->
-    <div class="col-md-8">
-        <div class="card card-custom p-4">
-            <h5 class="fw-bold mb-3">Edit Profile Details</h5>
-            <form action="/profile" method="POST" enctype="multipart/form-data">
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" name="name" class="form-control" id="pName" value="<%= profile.name %>" required>
-                            <label for="pName">Full Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="email" class="form-control" id="pEmail" value="<%= profile.email %>" disabled>
-                            <label for="pEmail">Email Address (Read-only)</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" name="course" class="form-control" id="pCourse" value="<%= profile.course %>">
-                            <label for="pCourse">Course</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" name="department" class="form-control" id="pDept" value="<%= profile.department %>">
-                            <label for="pDept">Department</label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-floating">
-                            <textarea name="bio" class="form-control" id="pBio" style="height: 80px;"><%= profile.bio %></textarea>
-                            <label for="pBio">Bio</label>
-                        </div>
-                    </div>
+    <div class="row g-4">
+        <!-- Bio & Overview Tile -->
+        <div class="col-md-4">
+            <div class="bento-card spotlight-card h-100 p-4">
+                <h5 class="fw-extrabold font-heading mb-3"><i class="bi bi-person-badge text-primary me-2"></i> About Me</h5>
+                <p class="text-secondary-custom small mb-4"><%= profile.bio || 'No bio added yet.' %></p>
+                <div class="border-top pt-3 small text-muted">
+                    <div class="mb-2"><i class="bi bi-envelope me-2 text-primary"></i> <%= profile.email %></div>
+                    <div><i class="bi bi-calendar3 me-2 text-info"></i> Member since 2026</div>
                 </div>
-                <button type="submit" class="btn btn-primary-gradient px-4">Save Changes</button>
-            </form>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form Tile -->
+        <div class="col-md-8">
+            <div class="bento-card spotlight-card p-4 p-md-5">
+                <h4 class="fw-extrabold font-heading mb-4"><i class="bi bi-pencil-square text-primary me-2"></i> Edit Account Info</h4>
+                <form action="/profile" method="POST" enctype="multipart/form-data">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" name="name" class="form-control" id="pName" value="<%= profile.name %>" required>
+                                <label for="pName">Full Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="pEmail" value="<%= profile.email %>" disabled>
+                                <label for="pEmail">Email Address (Read-only)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" name="course" class="form-control" id="pCourse" value="<%= profile.course %>">
+                                <label for="pCourse">Course</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" name="department" class="form-control" id="pDept" value="<%= profile.department %>">
+                                <label for="pDept">Department</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea name="bio" class="form-control" id="pBio" style="height: 100px;"><%= profile.bio %></textarea>
+                                <label for="pBio">Bio</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-aurora btn-shine px-4 py-2">Save Profile Changes</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

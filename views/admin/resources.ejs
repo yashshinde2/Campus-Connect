@@ -1,49 +1,59 @@
-<h3 class="fw-bold mb-4">Resource Moderation Queue</h3>
-<div class="card card-custom p-4">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Subject</th>
-                    <th>Uploaded By</th>
-                    <th>Format</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% resources.forEach(r => { %>
+<div class="container-fluid px-lg-4 py-4">
+    <div class="mb-4">
+        <span class="badge bg-danger-subtle text-danger mb-1 fw-bold">Admin Panel</span>
+        <h1 class="display-6 fw-extrabold font-heading mb-0">Resource Moderation Queue</h1>
+    </div>
+
+    <div class="bento-card spotlight-card p-4">
+        <div class="table-responsive">
+            <table class="table-aurora">
+                <thead>
                     <tr>
-                        <td class="fw-bold"><%= r.title %></td>
-                        <td><%= r.subject %></td>
-                        <td><%= r.uploadedBy ? r.uploadedBy.name : 'Unknown' %></td>
-                        <td><span class="badge bg-light text-primary border text-uppercase"><%= r.type %></span></td>
-                        <td>
-                            <% if (r.status === 'approved') { %>
-                                <span class="badge bg-success-subtle text-success">Approved</span>
-                            <% } else if (r.status === 'pending') { %>
-                                <span class="badge bg-warning-subtle text-warning">Pending</span>
-                            <% } else { %>
-                                <span class="badge bg-danger-subtle text-danger">Rejected</span>
-                            <% } %>
-                        </td>
-                        <td>
-                            <% if (r.status === 'pending') { %>
-                                <form action="/admin/resources/<%= r._id %>/approve" method="POST" class="d-inline me-1">
-                                    <button type="submit" class="btn btn-sm btn-success">Approve</button>
-                                </form>
-                                <form action="/admin/resources/<%= r._id %>/reject" method="POST" class="d-inline me-1">
-                                    <button type="submit" class="btn btn-sm btn-warning">Reject</button>
-                                </form>
-                            <% } %>
-                            <form action="/admin/resources/<%= r._id %>/delete" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete resource?')">Delete</button>
-                            </form>
-                        </td>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Uploaded By</th>
+                        <th>Format</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% if (resources && resources.length > 0) { %>
+                        <% resources.forEach(r => { %>
+                            <tr>
+                                <td class="fw-bold"><%= r.title %></td>
+                                <td><%= r.subject %></td>
+                                <td><%= r.uploadedBy ? r.uploadedBy.name : 'Student' %></td>
+                                <td><span class="badge bg-surface border text-primary text-uppercase"><%= r.type %></span></td>
+                                <td>
+                                    <% if (r.status === 'approved') { %>
+                                        <span class="badge bg-success-subtle text-success">Approved</span>
+                                    <% } else if (r.status === 'pending') { %>
+                                        <span class="badge bg-warning-subtle text-warning">Pending Review</span>
+                                    <% } else { %>
+                                        <span class="badge bg-danger-subtle text-danger">Rejected</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (r.status === 'pending') { %>
+                                        <form action="/admin/resources/<%= r._id %>/approve" method="POST" class="d-inline me-1">
+                                            <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">Approve</button>
+                                        </form>
+                                        <form action="/admin/resources/<%= r._id %>/reject" method="POST" class="d-inline me-1">
+                                            <button type="submit" class="btn btn-sm btn-warning rounded-pill px-3">Reject</button>
+                                        </form>
+                                    <% } %>
+                                    <form action="/admin/resources/<%= r._id %>/delete" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="return confirm('Delete resource?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr><td colspan="6" class="text-center py-4 text-muted">No uploaded study resources in queue.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

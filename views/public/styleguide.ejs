@@ -1,45 +1,54 @@
-<div class="container py-4">
-    <h2 class="fw-bold mb-4">UI Component Library & Styleguide</h2>
-    <p class="text-muted mb-5">Demonstrating all custom UI tokens, buttons, badges, cards, and design system components.</p>
+<div class="container py-5">
+    <span class="badge badge-academic mb-2">Design Tokens</span>
+    <h1 class="display-5 fw-extrabold font-heading mb-3">Aurora Bento UI Styleguide</h1>
+    <p class="text-secondary-custom mb-5">Interactive showcase of all design tokens, typography, bento cards, buttons, and category badges.</p>
 
-    <!-- Buttons -->
-    <div class="card card-custom p-4 mb-4">
-        <h5 class="fw-bold mb-3">1. Buttons</h5>
+    <!-- Buttons Section -->
+    <div class="bento-card spotlight-card p-4 mb-4">
+        <h4 class="fw-bold font-heading mb-3">1. Button Styles</h4>
         <div class="d-flex flex-wrap gap-3">
-            <button class="btn btn-primary-gradient">Primary Gradient</button>
-            <button class="btn btn-soft">Soft Tinted</button>
-            <button class="btn btn-outline-primary">Outline</button>
-            <button class="btn btn-danger">Danger</button>
-            <button class="btn btn-success">Success</button>
+            <button class="btn btn-aurora btn-shine"><i class="bi bi-stars"></i> Primary Aurora</button>
+            <button class="btn btn-aurora-secondary"><i class="bi bi-compass"></i> Secondary Outline</button>
+            <button class="btn btn-aurora-soft"><i class="bi bi-lightning"></i> Soft Tinted</button>
+            <button class="btn btn-outline-danger rounded-pill px-3"><i class="bi bi-trash"></i> Danger Action</button>
         </div>
     </div>
 
-    <!-- Category Badges -->
-    <div class="card card-custom p-4 mb-4">
-        <h5 class="fw-bold mb-3">2. Category Badges</h5>
+    <!-- Category Badges Section -->
+    <div class="bento-card spotlight-card p-4 mb-4">
+        <h4 class="fw-bold font-heading mb-3">2. Dynamic Category Badges</h4>
         <div class="d-flex flex-wrap gap-2">
-            <span class="badge badge-category badge-exam"><i class="bi bi-file-earmark-text me-1"></i> Exam</span>
-            <span class="badge badge-category badge-academic"><i class="bi bi-book me-1"></i> Academic</span>
-            <span class="badge badge-category badge-event"><i class="bi bi-calendar-event me-1"></i> Event</span>
-            <span class="badge badge-category badge-general"><i class="bi bi-info-circle me-1"></i> General</span>
-            <span class="badge badge-category badge-placement"><i class="bi bi-briefcase me-1"></i> Placement</span>
+            <span class="badge badge-category badge-exam"><i class="bi bi-file-earmark-text"></i> Exam</span>
+            <span class="badge badge-category badge-academic"><i class="bi bi-book"></i> Academic</span>
+            <span class="badge badge-category badge-event"><i class="bi bi-calendar-event"></i> Event</span>
+            <span class="badge badge-category badge-general"><i class="bi bi-info-circle"></i> General</span>
+            <span class="badge badge-category badge-placement"><i class="bi bi-briefcase"></i> Placement</span>
         </div>
     </div>
 
-    <!-- Cards -->
-    <div class="card card-custom p-4 mb-4">
-        <h5 class="fw-bold mb-3">3. Cards & Stat Tiles</h5>
+    <!-- Cards & Stat Tiles Section -->
+    <div class="bento-card spotlight-card p-4 mb-4">
+        <h4 class="fw-bold font-heading mb-3">3. Stat Tiles & Bento Cards</h4>
         <div class="row g-3">
             <div class="col-md-4">
-                <div class="card card-custom p-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="icon-tile icon-tile-gradient">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold mb-0">1,250</h4>
-                            <small class="text-muted">Total Enrolled</small>
-                        </div>
+                <div class="stat-tile d-flex align-items-center gap-3">
+                    <div class="icon-tile icon-tile-gradient">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-extrabold mb-0 text-primary counter" data-target="1450">0</h3>
+                        <small class="text-muted fw-semibold">Active Students</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-tile d-flex align-items-center gap-3">
+                    <div class="icon-tile text-cyan" style="background: rgba(6,182,212,0.12);">
+                        <i class="bi bi-folder-fill"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-extrabold mb-0 text-cyan counter" data-target="320">0</h3>
+                        <small class="text-muted fw-semibold">Study Notes</small>
                     </div>
                 </div>
             </div>

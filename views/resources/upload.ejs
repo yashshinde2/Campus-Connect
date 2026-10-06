@@ -1,71 +1,73 @@
-<div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-        <div class="card card-custom p-4 shadow-lg">
-            <div class="text-center mb-4">
-                <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; font-size: 1.3rem;">
-                    <i class="bi bi-cloud-arrow-up"></i>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="bento-card spotlight-card p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; font-size: 1.3rem;">
+                        <i class="bi bi-cloud-arrow-up"></i>
+                    </div>
+                    <h2 class="fw-extrabold font-heading">Upload Study Material</h2>
+                    <p class="text-secondary-custom small">Share verified notes or document links with fellow students</p>
                 </div>
-                <h3 class="fw-bold">Upload Study Material</h3>
-                <p class="text-muted small">Share verified notes or document links with fellow students</p>
+
+                <form action="/resources/upload" method="POST" enctype="multipart/form-data">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="title" class="form-control" id="rTitle" placeholder="Title" required>
+                        <label for="rTitle">Resource Title</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" name="subject" class="form-control" id="rSubject" placeholder="Subject" required>
+                        <label for="rSubject">Subject Name (e.g. Computer Networks)</label>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select name="semester" class="form-select" id="rSem" required>
+                                    <option value="1">Semester 1</option>
+                                    <option value="2">Semester 2</option>
+                                    <option value="3">Semester 3</option>
+                                    <option value="4">Semester 4</option>
+                                    <option value="5">Semester 5</option>
+                                    <option value="6">Semester 6</option>
+                                </select>
+                                <label for="rSem">Semester</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select name="type" class="form-select" id="rType" required>
+                                    <option value="pdf">PDF Document</option>
+                                    <option value="ppt">PPT Presentation</option>
+                                    <option value="note">Notes</option>
+                                    <option value="link">External Link</option>
+                                </select>
+                                <label for="rType">Format Type</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea name="description" class="form-control" id="rDesc" style="height: 100px;" placeholder="Description" required></textarea>
+                        <label for="rDesc">Brief Description</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-secondary-custom">Upload Document (Max 10MB)</label>
+                        <input type="file" name="file" class="form-control">
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="url" name="linkUrl" class="form-control" id="rLink" placeholder="https://">
+                        <label for="rLink">Or External URL Link (Optional)</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-aurora btn-shine w-100 py-3 justify-content-center">
+                        Submit for Approval <i class="bi bi-send ms-1"></i>
+                    </button>
+                </form>
             </div>
-
-            <form action="/resources/upload" method="POST" enctype="multipart/form-data">
-                <div class="form-floating mb-3">
-                    <input type="text" name="title" class="form-control" id="rTitle" placeholder="Title" required>
-                    <label for="rTitle">Resource Title</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" name="subject" class="form-control" id="rSubject" placeholder="Subject" required>
-                    <label for="rSubject">Subject Name (e.g. Computer Networks)</label>
-                </div>
-
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <select name="semester" class="form-select" id="rSem" required>
-                                <option value="1">Semester 1</option>
-                                <option value="2">Semester 2</option>
-                                <option value="3">Semester 3</option>
-                                <option value="4">Semester 4</option>
-                                <option value="5">Semester 5</option>
-                                <option value="6">Semester 6</option>
-                            </select>
-                            <label for="rSem">Semester</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <select name="type" class="form-select" id="rType" required>
-                                <option value="pdf">PDF Document</option>
-                                <option value="ppt">PPT Presentation</option>
-                                <option value="note">Notes</option>
-                                <option value="link">External Link</option>
-                            </select>
-                            <label for="rType">Format Type</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <textarea name="description" class="form-control" id="rDesc" style="height: 100px;" placeholder="Description" required></textarea>
-                    <label for="rDesc">Brief Description</label>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label small fw-bold text-muted">Upload Document (Max 10MB)</label>
-                    <input type="file" name="file" class="form-control">
-                </div>
-
-                <div class="form-floating mb-4">
-                    <input type="url" name="linkUrl" class="form-control" id="rLink" placeholder="https://">
-                    <label for="rLink">Or External URL Link (Optional)</label>
-                </div>
-
-                <button type="submit" class="btn btn-primary-gradient w-100 py-2">
-                    Submit for Approval <i class="bi bi-send ms-1"></i>
-                </button>
-            </form>
         </div>
     </div>
 </div>

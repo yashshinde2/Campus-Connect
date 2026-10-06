@@ -1,26 +1,37 @@
-<div class="row mb-4 align-items-center">
-    <div class="col-md-6">
-        <h2 class="fw-bold mb-1">Study Groups</h2>
-        <p class="text-muted small mb-0">Collaborate with classmates in subject-focused study groups</p>
+<div class="container py-4">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <span class="badge badge-academic mb-2">Peer Learning</span>
+            <h1 class="display-5 fw-extrabold font-heading mb-1">Study Groups</h1>
+            <p class="text-secondary-custom small mb-0">Collaborate with classmates in subject-focused study groups</p>
+        </div>
     </div>
-</div>
 
-<div class="row g-4">
-    <% if (groups && groups.length > 0) { %>
-        <% groups.forEach(group => { %>
-            <div class="col-md-6 col-lg-4">
-                <div class="card card-custom p-4 h-100">
-                    <div class="icon-tile icon-tile-gradient mb-3">
-                        <i class="bi bi-people"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2"><%= group.name %></h5>
-                    <p class="text-muted small mb-3 flex-grow-1"><%= group.description %></p>
-                    <div class="d-flex justify-content-between align-items-center border-top pt-3">
-                        <span class="small text-muted"><i class="bi bi-person me-1"></i> <%= group.members.length %> Members</span>
-                        <a href="/groups/<%= group._id %>" class="btn btn-sm btn-soft">View Group</a>
+    <div class="row g-4">
+        <% if (groups && groups.length > 0) { %>
+            <% groups.forEach(group => { %>
+                <div class="col-md-6 col-lg-4">
+                    <div class="bento-card spotlight-card h-100 p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="icon-tile icon-tile-gradient">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <span class="badge badge-placement">Active Group</span>
+                        </div>
+                        <h5 class="fw-bold font-heading mb-2"><%= group.name %></h5>
+                        <p class="text-secondary-custom small mb-3 flex-grow-1"><%= group.description %></p>
+                        <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                            <span class="small text-muted"><i class="bi bi-people me-1 text-primary"></i> <%= group.members ? group.members.length : 0 %> Members</span>
+                            <a href="/groups/<%= group._id %>" class="btn btn-aurora-soft btn-sm">View Group <i class="bi bi-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
+            <% }) %>
+        <% } else { %>
+            <div class="col-12 text-center py-5 text-muted bento-card">
+                <i class="bi bi-people fs-1 d-block mb-2 text-primary opacity-50"></i>
+                No active study groups listed right now.
             </div>
-        <% }) %>
-    <% } %>
+        <% } %>
+    </div>
 </div>

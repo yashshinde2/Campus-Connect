@@ -1,25 +1,35 @@
-<h3 class="fw-bold mb-4">Administrator Activity Logs</h3>
-<div class="card card-custom p-4">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>Admin</th>
-                    <th>Action</th>
-                    <th>Target Type</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% logs.forEach(l => { %>
+<div class="container-fluid px-lg-4 py-4">
+    <div class="mb-4">
+        <span class="badge bg-danger-subtle text-danger mb-1 fw-bold">Admin Panel</span>
+        <h1 class="display-6 fw-extrabold font-heading mb-0">Administrator Activity Logs</h1>
+    </div>
+
+    <div class="bento-card spotlight-card p-4">
+        <div class="table-responsive">
+            <table class="table-aurora">
+                <thead>
                     <tr>
-                        <td class="fw-bold"><%= l.admin ? l.admin.name : 'System Admin' %></td>
-                        <td><%= l.action %></td>
-                        <td><span class="badge bg-light text-dark border"><%= l.targetType %></span></td>
-                        <td><%= new Date(l.createdAt).toLocaleString() %></td>
+                        <th>Admin</th>
+                        <th>Action</th>
+                        <th>Target Type</th>
+                        <th>Timestamp</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% if (logs && logs.length > 0) { %>
+                        <% logs.forEach(l => { %>
+                            <tr>
+                                <td class="fw-bold"><%= l.admin ? l.admin.name : 'System Admin' %></td>
+                                <td><%= l.action %></td>
+                                <td><span class="badge bg-surface border text-dark dark-text-light"><%= l.targetType %></span></td>
+                                <td><%= new Date(l.createdAt).toLocaleString() %></td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr><td colspan="4" class="text-center py-4 text-muted">No activity logs recorded yet.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

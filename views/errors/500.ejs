@@ -1,10 +1,14 @@
-<div class="row justify-content-center align-items-center min-vh-75 text-center">
-    <div class="col-md-6">
-        <h1 class="display-1 fw-extrabold text-danger">500</h1>
-        <h3 class="fw-bold mb-3">Internal Server Error</h3>
-        <p class="text-muted mb-4"><%= typeof error !== 'undefined' ? error : 'Something went wrong on our server. Please try again later.' %></p>
-        <a href="/" class="btn btn-primary-gradient px-4 py-2">
-            <i class="bi bi-arrow-left me-1"></i> Return Home
-        </a>
+<div class="container py-5 text-center">
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-md-7 col-lg-6">
+            <div class="bento-card spotlight-card p-5">
+                <h1 class="display-1 fw-extrabold text-danger font-heading mb-2">500</h1>
+                <h3 class="fw-extrabold font-heading mb-3">Internal Server Error</h3>
+                <p class="text-secondary-custom mb-4"><%= typeof error !== 'undefined' ? error : 'Something went wrong on our server. Please try again later.' %></p>
+                <a href="/" class="btn btn-aurora btn-shine px-4 py-3">
+                    <i class="bi bi-arrow-left me-1"></i> Return Home
+                </a>
+            </div>
+        </div>
     </div>
 </div>

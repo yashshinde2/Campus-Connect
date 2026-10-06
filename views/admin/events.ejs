@@ -1,74 +1,89 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold">Manage Campus Events</h3>
-    <button class="btn btn-primary-gradient" data-bs-toggle="modal" data-bs-target="#createEventModal">
-        <i class="bi bi-plus-lg me-1"></i> Create Event
-    </button>
-</div>
+<div class="container-fluid px-lg-4 py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <span class="badge bg-danger-subtle text-danger mb-1 fw-bold">Admin Panel</span>
+            <h1 class="display-6 fw-extrabold font-heading mb-0">Manage Campus Events</h1>
+        </div>
+        <button class="btn btn-aurora btn-shine" data-bs-toggle="modal" data-bs-target="#createEventModal">
+            <i class="bi bi-plus-lg me-1"></i> Create Event
+        </button>
+    </div>
 
-<div class="card card-custom p-4">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Date & Time</th>
-                    <th>Venue</th>
-                    <th>Attendees</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% events.forEach(e => { %>
+    <div class="bento-card spotlight-card p-4">
+        <div class="table-responsive">
+            <table class="table-aurora">
+                <thead>
                     <tr>
-                        <td class="fw-bold"><%= e.title %></td>
-                        <td><%= new Date(e.date).toLocaleDateString() %> (<%= e.time %>)</td>
-                        <td><%= e.venue %></td>
-                        <td><%= e.attendees.length %> / <%= e.capacity %></td>
-                        <td>
-                            <form action="/admin/events/<%= e._id %>/delete" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete event?')">Delete</button>
-                            </form>
-                        </td>
+                        <th>Title</th>
+                        <th>Date & Time</th>
+                        <th>Venue</th>
+                        <th>Attendees</th>
+                        <th>Actions</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% if (events && events.length > 0) { %>
+                        <% events.forEach(e => { %>
+                            <tr>
+                                <td class="fw-bold"><%= e.title %></td>
+                                <td><%= new Date(e.date).toLocaleDateString() %> (<%= e.time %>)</td>
+                                <td><i class="bi bi-geo-alt text-primary me-1"></i> <%= e.venue %></td>
+                                <td><span class="badge badge-event"><%= e.attendees ? e.attendees.length : 0 %> / <%= e.capacity %></span></td>
+                                <td>
+                                    <form action="/admin/events/<%= e._id %>/delete" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="return confirm('Delete event?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr><td colspan="5" class="text-center py-4 text-muted">No campus events created yet.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="createEventModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<!-- Create Event Modal -->
+<div class="modal fade" id="createEventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bento-card p-4 border-0">
             <form action="/admin/events" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold">Create Campus Event</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header border-bottom pb-3 mb-3" style="border-color: var(--line) !important;">
+                    <h5 class="modal-title fw-extrabold font-heading">Create Campus Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" required>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="title" class="form-control" id="evTitle" placeholder="Title" required>
+                        <label for="evTitle">Event Title</label>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Date</label>
-                        <input type="date" name="date" class="form-control" required>
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <div class="form-floating">
+                                <input type="date" name="date" class="form-control" id="evDate" required>
+                                <label for="evDate">Date</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating">
+                                <input type="text" name="time" class="form-control" id="evTime" placeholder="10:00 AM" required>
+                                <label for="evTime">Time</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Time</label>
-                        <input type="text" name="time" class="form-control" placeholder="10:00 AM - 02:00 PM" required>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="venue" class="form-control" id="evVenue" placeholder="Venue" required>
+                        <label for="evVenue">Venue Location</label>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Venue</label>
-                        <input type="text" name="venue" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" class="form-control" rows="3" required></textarea>
+                    <div class="form-floating mb-3">
+                        <textarea name="description" class="form-control" id="evDesc" style="height: 100px;" placeholder="Description" required></textarea>
+                        <label for="evDesc">Description</label>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary-gradient">Create Event</button>
+                <div class="modal-footer border-top pt-3" style="border-color: var(--line) !important;">
+                    <button type="submit" class="btn btn-aurora btn-shine w-100 py-2.5 justify-content-center">Create Event</button>
                 </div>
             </form>
         </div>

@@ -1,13 +1,6 @@
 <%- include('head') %>
 <%- include('navbar') %>
 
-<% if (typeof siteBanner !== 'undefined' && siteBanner) { %>
-    <div class="alert alert-<%= siteBanner.type || 'info' %> alert-dismissible text-center mb-0 rounded-0 border-0 py-2">
-        <i class="bi bi-bell-fill me-1"></i> <%= siteBanner.text %>
-        <button type="button" class="btn-close py-2" data-bs-dismiss="alert"></button>
-    </div>
-<% } %>
-
 <main class="min-vh-100 py-4">
     <div class="container-fluid px-lg-4">
         <%- include('flash') %>
@@ -15,8 +8,24 @@
     </div>
 </main>
 
+<%- include('command_palette') %>
+<%- include('bottom_nav') %>
 <%- include('footer') %>
+
+<!-- Bootstrap 5 JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Aurora Bento JS Modules -->
+<script src="/js/modules/spotlight.js"></script>
+<script src="/js/modules/command-palette.js"></script>
+<script src="/js/modules/counters.js"></script>
+<script src="/js/modules/tilt.js"></script>
+<script src="/js/modules/toast.js"></script>
+<script src="/js/modules/ripple.js"></script>
+<script src="/js/modules/transitions.js"></script>
+<script src="/js/modules/onboarding.js"></script>
+
+<!-- Main JS Entry Point -->
 <script src="/js/main.js"></script>
 </body>
 </html>

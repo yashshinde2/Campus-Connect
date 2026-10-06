@@ -1,50 +1,61 @@
-<div class="row mb-4 align-items-center">
-    <div class="col-md-6">
-        <h2 class="fw-bold mb-1">Campus Notices</h2>
-        <p class="text-muted small mb-0">Official academic announcements, exam timetables, and placement alerts</p>
+<!-- Notices List Page -->
+<div class="container py-4">
+    <div class="row mb-4 align-items-center gy-3">
+        <div class="col-md-6">
+            <span class="badge badge-academic mb-2">Notice Board</span>
+            <h1 class="display-5 fw-extrabold font-heading mb-1">Campus Notices</h1>
+            <p class="text-secondary-custom small mb-0">Official academic announcements, exam schedules, and department circulars</p>
+        </div>
+        <div class="col-md-6">
+            <form action="/notices" method="GET" class="d-flex gap-2">
+                <div class="position-relative flex-grow-1">
+                    <input type="text" name="search" class="form-control rounded-pill ps-4" placeholder="Search notices by keyword..." value="<%= currentSearch %>">
+                </div>
+                <button type="submit" class="btn btn-aurora rounded-pill px-4"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
     </div>
-    <div class="col-md-6">
-        <form action="/notices" method="GET" class="d-flex gap-2">
-            <input type="text" name="search" class="form-control" placeholder="Search notices..." value="<%= currentSearch %>">
-            <button type="submit" class="btn btn-primary-gradient px-4"><i class="bi bi-search"></i></button>
-        </form>
+
+    <!-- Category Pill Chips Sticky Filter Bar -->
+    <div class="d-flex flex-wrap gap-2 mb-4 p-2 rounded-pill bg-surface border border-hairline shadow-sm overflow-x-auto">
+        <% ['All', 'Exam', 'Academic', 'Event', 'General', 'Placement'].forEach(cat => { %>
+            <a href="/notices?category=<%= cat %>&search=<%= currentSearch %>" 
+               class="btn btn-sm <%= currentCategory === cat ? 'btn-aurora' : 'btn-aurora-secondary' %> rounded-pill px-3">
+                <%= cat %>
+            </a>
+        <% }) %>
     </div>
-</div>
 
-<!-- Category Filters -->
-<div class="d-flex flex-wrap gap-2 mb-4">
-    <% ['All', 'Exam', 'Academic', 'Event', 'General', 'Placement'].forEach(cat => { %>
-        <a href="/notices?category=<%= cat %>&search=<%= currentSearch %>" 
-           class="btn btn-sm <%= currentCategory === cat ? 'btn-primary-gradient' : 'btn-soft' %> rounded-pill px-3">
-            <%= cat %>
-        </a>
-    <% }) %>
-</div>
-
-<!-- Notices Grid -->
-<div class="row g-4 mb-4">
-    <% if (notices && notices.length > 0) { %>
-        <% notices.forEach(notice => { %>
-            <div class="col-md-6 col-lg-4">
-                <div class="card card-custom p-4 h-100 position-relative">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="badge badge-category badge-<%= notice.category.toLowerCase() %>"><%= notice.category %></span>
-                        <% if (notice.isPinned) { %>
-                            <span class="badge bg-warning-subtle text-warning"><i class="bi bi-pin-angle-fill me-1"></i> Pinned</span>
-                        <% } %>
-                    </div>
-                    <h5 class="fw-bold mb-2">
-                        <a href="/notices/<%= notice._id %>" class="text-dark text-decoration-none"><%= notice.title %></a>
-                    </h5>
-                    <p class="text-muted small mb-3 flex-grow-1"><%= notice.description.substring(0, 100) %>...</p>
-                    <div class="d-flex justify-content-between align-items-center border-top pt-3 small text-muted">
-                        <span><i class="bi bi-clock me-1"></i> <%= new Date(notice.createdAt).toLocaleDateString() %></span>
-                        <a href="/notices/<%= notice._id %>" class="btn btn-sm btn-soft">Read More <i class="bi bi-arrow-right"></i></a>
+    <!-- Notices Bento Cards Grid -->
+    <div class="row g-4 mb-4">
+        <% if (notices && notices.length > 0) { %>
+            <% notices.forEach(notice => { %>
+                <div class="col-md-6 col-lg-4">
+                    <div class="bento-card spotlight-card h-100 p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge badge-category badge-<%= notice.category ? notice.category.toLowerCase() : 'general' %>"><%= notice.category %></span>
+                            <% if (notice.isPinned) { %>
+                                <span class="badge bg-warning-subtle text-warning"><i class="bi bi-pin-angle-fill me-1"></i> Pinned</span>
+                            <% } else if (notice.isUrgent) { %>
+                                <span class="badge bg-danger-subtle text-danger"><span class="urgent-pulse me-1"></span> Urgent</span>
+                            <% } %>
+                        </div>
+                        <h5 class="fw-bold font-heading mb-2">
+                            <a href="/notices/<%= notice._id %>" class="text-decoration-none text-dark dark-text-light"><%= notice.title %></a>
+                        </h5>
+                        <p class="text-secondary-custom small mb-4 flex-grow-1"><%= notice.description ? notice.description.substring(0, 110) : '' %>...</p>
+                        <div class="d-flex justify-content-between align-items-center border-top pt-3 small text-muted">
+                            <span><i class="bi bi-clock me-1"></i> <%= new Date(notice.createdAt).toLocaleDateString() %></span>
+                            <a href="/notices/<%= notice._id %>" class="btn btn-aurora-soft btn-sm">Read <i class="bi bi-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
+            <% }) %>
+        <% } else { %>
+            <div class="col-12 text-center py-5 text-muted bento-card">
+                <i class="bi bi-search fs-1 d-block mb-2 text-primary opacity-50"></i>
+                No notices matching your filter.
             </div>
-        <% }) %>
-    <% } else { %>
-        <div class="col-12 text-center py-5 text-muted">No notices matching your criteria.</div>
-    <% } %>
+        <% } %>
+    </div>
 </div>

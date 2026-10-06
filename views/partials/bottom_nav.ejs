@@ -1,0 +1,42 @@
+<!-- Mobile Bottom Navigation Bar (< 768px) -->
+<nav class="bottom-nav-bar d-md-none">
+    <% if (user) { %>
+        <a href="/dashboard" class="bottom-nav-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="/notices" class="bottom-nav-item">
+            <i class="bi bi-megaphone-fill"></i>
+            <span>Notices</span>
+        </a>
+        <a href="/events" class="bottom-nav-item">
+            <i class="bi bi-calendar-event-fill"></i>
+            <span>Events</span>
+        </a>
+        <a href="/resources" class="bottom-nav-item">
+            <i class="bi bi-folder2-open"></i>
+            <span>Study Hub</span>
+        </a>
+        <a href="/community" class="bottom-nav-item">
+            <i class="bi bi-chat-square-text-fill"></i>
+            <span>Community</span>
+        </a>
+    <% } else { %>
+        <a href="/" class="bottom-nav-item">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Home</span>
+        </a>
+        <a href="/notices" class="bottom-nav-item">
+            <i class="bi bi-megaphone-fill"></i>
+            <span>Notices</span>
+        </a>
+        <a href="/events" class="bottom-nav-item">
+            <i class="bi bi-calendar-event-fill"></i>
+            <span>Events</span>
+        </a>
+        <a href="/auth/login" class="bottom-nav-item">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span>Sign In</span>
+        </a>
+    <% } %>
+</nav>

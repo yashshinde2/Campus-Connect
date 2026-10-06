@@ -1,167 +1,236 @@
-<div class="row g-4">
-    <!-- Header Greeting -->
-    <div class="col-12">
-        <div class="card card-custom p-4 bg-white border-0 shadow-sm">
-            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-initials" style="width: 54px; height: 54px; font-size: 1.3rem;">
-                        <%= user.name.charAt(0).toUpperCase() %>
+<!-- ==================================================
+   STUDENT DASHBOARD - 12-COLUMN BENTO GRID
+   ================================================== -->
+
+<!-- Onboarding Tour Modal -->
+<div class="modal fade" id="onboardingTourModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bento-card border-0 shadow-lg p-3">
+            <div class="modal-body text-center">
+                <!-- Step 1 -->
+                <div class="onboarding-step" data-step="0">
+                    <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem;">
+                        <i class="bi bi-compass"></i>
                     </div>
+                    <h4 class="fw-extrabold font-heading mb-2">Welcome to Campus Connect!</h4>
+                    <p class="text-secondary-custom small mb-4">Your central hub for official notices, campus events, and study materials.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="onboarding-step d-none" data-step="1">
+                    <div class="icon-tile rounded-circle mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem; background: rgba(37,99,235,0.12); color: var(--primary);">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <h4 class="fw-extrabold font-heading mb-2">Instant Search Anywhere</h4>
+                    <p class="text-secondary-custom small mb-4">Press <span class="kbd-badge">Ctrl K</span> or <span class="kbd-badge">/</span> on your keyboard to instantly find notices, files, and events.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="onboarding-step d-none" data-step="2">
+                    <div class="icon-tile rounded-circle mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem; background: rgba(16,185,129,0.12); color: var(--success);">
+                        <i class="bi bi-bell"></i>
+                    </div>
+                    <h4 class="fw-extrabold font-heading mb-2">Real-time Notifications</h4>
+                    <p class="text-secondary-custom small mb-4">Check your unread alert dot on the navbar to stay updated with high-priority campus announcements.</p>
+                </div>
+
+                <!-- Dots Progress -->
+                <div class="d-flex justify-content-center gap-1.5 mb-4">
+                    <span class="tour-step-dot rounded-circle bg-primary" style="width:8px; height:8px;"></span>
+                    <span class="tour-step-dot rounded-circle bg-secondary-subtle" style="width:8px; height:8px;"></span>
+                    <span class="tour-step-dot rounded-circle bg-secondary-subtle" style="width:8px; height:8px;"></span>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-sm btn-link text-muted tour-skip-btn text-decoration-none">Skip Tour</button>
                     <div>
-                        <h3 class="fw-bold mb-1">Welcome back, <%= user.name %>! 👋</h3>
-                        <p class="text-muted small mb-0"><%= user.course %> • <%= user.department %> (Semester <%= user.semester || 1 %>)</p>
+                        <button type="button" id="tourPrevBtn" class="btn btn-sm btn-aurora-secondary d-none me-1">Back</button>
+                        <button type="button" id="tourNextBtn" class="btn btn-sm btn-aurora">Next</button>
+                        <button type="button" id="tourFinishBtn" class="btn btn-sm btn-aurora btn-shine d-none">Get Started!</button>
                     </div>
                 </div>
-                <div>
-                    <a href="/resources/upload" class="btn btn-primary-gradient"><i class="bi bi-cloud-arrow-up me-1"></i> Upload Resource</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header Greeting & Profile Completion -->
+<div class="bento-card spotlight-card mb-4 p-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <div class="avatar-pill" style="width: 54px; height: 54px; font-size: 1.4rem;">
+                <%= user.name.charAt(0).toUpperCase() %>
+            </div>
+            <div>
+                <% 
+                    const hour = new Date().getHours();
+                    let greeting = "Good morning";
+                    if (hour >= 12 && hour < 17) greeting = "Good afternoon";
+                    else if (hour >= 17) greeting = "Good evening";
+                %>
+                <h2 class="fw-extrabold font-heading mb-1"><%= greeting %>, <%= user.name.split(' ')[0] %>! 👋</h2>
+                <p class="text-secondary-custom small mb-0">
+                    <i class="bi bi-academic-cap me-1"></i> <%= user.course || 'B.Tech' %> • <%= user.department || 'Computer Science' %> (Semester <%= user.semester || 1 %>)
+                </p>
+            </div>
+        </div>
+        
+        <!-- Profile Completion Ring Bar & Actions -->
+        <div class="d-flex align-items-center gap-3 ms-md-auto">
+            <div class="d-flex flex-column align-items-end">
+                <span class="small text-muted fw-semibold mb-1">Profile Completion</span>
+                <div class="progress" style="width: 120px; height: 8px; background: var(--line);">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: <%= typeof completionPercent !== 'undefined' ? completionPercent : 80 %>%;"></div>
                 </div>
+            </div>
+            <a href="/resources/upload" class="btn btn-aurora btn-shine">
+                <i class="bi bi-cloud-arrow-up"></i> Upload Resource
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 12-Column Bento Grid Layout -->
+<div class="bento-grid-12">
+    <!-- Stat 1: Unread Alerts (Span 3) -->
+    <div class="bento-card spotlight-card p-3" style="grid-column: span 3;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="icon-tile icon-tile-gradient">
+                <i class="bi bi-bell-fill"></i>
+            </div>
+            <div>
+                <h3 class="fw-extrabold mb-0 text-primary counter" data-target="<%= stats.unreadCount || 0 %>">0</h3>
+                <small class="text-muted fw-semibold">Unread Alerts</small>
             </div>
         </div>
     </div>
 
-    <!-- Quick Stats Grid -->
-    <div class="col-6 col-md-3">
-        <div class="card card-custom p-3">
-            <div class="d-flex align-items-center gap-3">
-                <div class="icon-tile icon-tile-gradient">
-                    <i class="bi bi-bell"></i>
-                </div>
-                <div>
-                    <h4 class="fw-bold mb-0"><%= stats.unreadCount %></h4>
-                    <small class="text-muted">Unread Alerts</small>
-                </div>
+    <!-- Stat 2: Upcoming Events (Span 3) -->
+    <div class="bento-card spotlight-card p-3" style="grid-column: span 3;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="icon-tile" style="background: rgba(139,92,246,0.12); color: var(--violet-accent);">
+                <i class="bi bi-calendar-event-fill"></i>
             </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card card-custom p-3">
-            <div class="d-flex align-items-center gap-3">
-                <div class="icon-tile bg-violet-subtle text-violet">
-                    <i class="bi bi-calendar-event"></i>
-                </div>
-                <div>
-                    <h4 class="fw-bold mb-0"><%= stats.upcomingEventsCount %></h4>
-                    <small class="text-muted">Upcoming Events</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card card-custom p-3">
-            <div class="d-flex align-items-center gap-3">
-                <div class="icon-tile bg-warning-subtle text-warning">
-                    <i class="bi bi-bookmark"></i>
-                </div>
-                <div>
-                    <h4 class="fw-bold mb-0"><%= stats.myBookmarksCount %></h4>
-                    <small class="text-muted">My Bookmarks</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="card card-custom p-3">
-            <div class="d-flex align-items-center gap-3">
-                <div class="icon-tile bg-success-subtle text-success">
-                    <i class="bi bi-folder-check"></i>
-                </div>
-                <div>
-                    <h4 class="fw-bold mb-0"><%= stats.myUploadsCount %></h4>
-                    <small class="text-muted">My Uploads</small>
-                </div>
+            <div>
+                <h3 class="fw-extrabold mb-0 counter" style="color: var(--violet-accent);" data-target="<%= stats.upcomingEventsCount || 0 %>">0</h3>
+                <small class="text-muted fw-semibold">Upcoming Events</small>
             </div>
         </div>
     </div>
 
-    <!-- Main Content Area -->
-    <div class="col-lg-8">
-        <!-- Latest Notices Card -->
-        <div class="card card-custom p-4 mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold mb-0"><i class="bi bi-megaphone text-primary me-2"></i> Official Notices</h5>
-                <a href="/notices" class="small text-primary fw-semibold text-decoration-none">View All</a>
+    <!-- Stat 3: Bookmarks (Span 3) -->
+    <div class="bento-card spotlight-card p-3" style="grid-column: span 3;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="icon-tile" style="background: rgba(245,158,11,0.12); color: var(--warning);">
+                <i class="bi bi-bookmark-fill"></i>
             </div>
-            <div class="list-group list-group-flush">
-                <% if (notices && notices.length > 0) { %>
-                    <% notices.forEach(notice => { %>
-                        <div class="list-group-item px-0 py-3 border-bottom-0">
-                            <div class="d-flex align-items-center justify-content-between mb-1">
-                                <span class="badge badge-category badge-<%= notice.category.toLowerCase() %>"><%= notice.category %></span>
-                                <% if (notice.isUrgent) { %>
-                                    <span class="badge bg-danger-subtle text-danger"><span class="urgent-pulse me-1"></span> URGENT</span>
-                                <% } %>
-                            </div>
-                            <h6 class="fw-bold mb-1">
-                                <a href="/notices/<%= notice._id %>" class="text-dark text-decoration-none"><%= notice.title %></a>
-                            </h6>
-                            <p class="small text-muted mb-2 text-truncate"><%= notice.description %></p>
-                            <div class="d-flex justify-content-between align-items-center small text-muted">
-                                <span><i class="bi bi-person me-1"></i> <%= notice.author ? notice.author.name : 'Admin' %></span>
-                                <button class="btn btn-sm btn-light btn-bookmark" data-id="<%= notice._id %>">
-                                    <i class="bi bi-bookmark text-muted"></i>
-                                </button>
-                            </div>
+            <div>
+                <h3 class="fw-extrabold mb-0 text-warning counter" data-target="<%= stats.myBookmarksCount || 0 %>">0</h3>
+                <small class="text-muted fw-semibold">Saved Bookmarks</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat 4: Uploads (Span 3) -->
+    <div class="bento-card spotlight-card p-3" style="grid-column: span 3;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="icon-tile" style="background: rgba(16,185,129,0.12); color: var(--success);">
+                <i class="bi bi-folder-check"></i>
+            </div>
+            <div>
+                <h3 class="fw-extrabold mb-0 text-success counter" data-target="<%= stats.myUploadsCount || 0 %>">0</h3>
+                <small class="text-muted fw-semibold">Shared Files</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Column: Official Notices (Span 8) -->
+    <div class="bento-card spotlight-card" style="grid-column: span 8;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <div class="icon-tile icon-tile-gradient" style="width:36px; height:36px; font-size:1rem;"><i class="bi bi-megaphone-fill"></i></div>
+                <h4 class="fw-extrabold font-heading mb-0">Official Notices</h4>
+            </div>
+            <a href="/notices" class="btn btn-aurora-soft btn-sm">View All <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+            <% if (notices && notices.length > 0) { %>
+                <% notices.forEach(notice => { %>
+                    <div class="p-3 rounded-3 border bg-surface-2 spotlight-card" style="border-color: var(--line) !important;">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <span class="badge badge-category badge-<%= notice.category ? notice.category.toLowerCase() : 'general' %>">
+                                <%= notice.category %>
+                            </span>
+                            <% if (notice.isUrgent) { %>
+                                <span class="badge bg-danger-subtle text-danger"><span class="urgent-pulse me-1"></span> URGENT</span>
+                            <% } %>
                         </div>
-                    <% }) %>
-                <% } else { %>
-                    <div class="text-center py-4 text-muted">No notices found.</div>
-                <% } %>
-            </div>
-        </div>
-
-        <!-- Upcoming Events Card -->
-        <div class="card card-custom p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold mb-0"><i class="bi bi-calendar-event text-violet me-2"></i> Upcoming Events</h5>
-                <a href="/events" class="small text-primary fw-semibold text-decoration-none">View All</a>
-            </div>
-            <div class="row g-3">
-                <% if (events && events.length > 0) { %>
-                    <% events.forEach(event => { %>
-                        <div class="col-md-6">
-                            <div class="card card-custom p-3 h-100 bg-light border-0">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="badge bg-violet-subtle text-violet fw-bold"><%= new Date(event.date).toLocaleDateString() %></span>
-                                    <span class="small text-muted"><%= event.time %></span>
-                                </div>
-                                <h6 class="fw-bold mb-1"><%= event.title %></h6>
-                                <p class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i> <%= event.venue %></p>
-                                <a href="/events/<%= event._id %>" class="btn btn-sm btn-soft w-100 mt-auto">Details & RSVP</a>
-                            </div>
+                        <h6 class="fw-bold mb-1">
+                            <a href="/notices/<%= notice._id %>" class="text-decoration-none text-dark dark-text-light"><%= notice.title %></a>
+                        </h6>
+                        <p class="small text-secondary-custom mb-2 text-truncate"><%= notice.description %></p>
+                        <div class="d-flex justify-content-between align-items-center small text-muted">
+                            <span><i class="bi bi-person me-1"></i> <%= notice.author ? notice.author.name : 'Academic Office' %></span>
+                            <button class="btn btn-sm btn-light btn-bookmark border-0 p-1" data-id="<%= notice._id %>" title="Save Bookmark">
+                                <i class="bi bi-bookmark text-muted"></i>
+                            </button>
                         </div>
-                    <% }) %>
-                <% } else { %>
-                    <div class="col-12 text-center py-4 text-muted">No upcoming events scheduled.</div>
-                <% } %>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sidebar Widgets -->
-    <div class="col-lg-4">
-        <!-- Profile Progress -->
-        <div class="card card-custom p-4 mb-4 text-center">
-            <h6 class="fw-bold mb-2">Profile Completion</h6>
-            <div class="progress mb-2" style="height: 10px;">
-                <div class="progress-bar bg-primary" role="progressbar" style="width: <%= completionPercent %>%;"></div>
-            </div>
-            <small class="text-muted"><%= completionPercent %>% completed. Complete your bio & course info.</small>
-        </div>
-
-        <!-- Deadline Reminders Widget -->
-        <div class="card card-custom p-4 mb-4">
-            <h6 class="fw-bold mb-3"><i class="bi bi-clock-history text-danger me-2"></i> Deadline Reminders</h6>
-            <% if (deadlines && deadlines.length > 0) { %>
-                <ul class="list-group list-group-flush small">
-                    <% deadlines.forEach(d => { %>
-                        <li class="list-group-item px-0 py-2 border-0 d-flex justify-content-between align-items-center">
-                            <span class="text-truncate fw-semibold" style="max-width: 180px;"><%= d.title %></span>
-                            <span class="badge bg-danger-subtle text-danger"><%= new Date(d.deadline).toLocaleDateString() %></span>
-                        </li>
-                    <% }) %>
-                </ul>
+                    </div>
+                <% }) %>
             <% } else { %>
-                <div class="small text-muted">No pending deadlines.</div>
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-inbox fs-1 d-block mb-2 text-primary opacity-50"></i>
+                    No official notices at this moment.
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Right Sidebar Column: Deadlines & Calendar (Span 4) -->
+    <div class="d-flex flex-column gap-4" style="grid-column: span 4;">
+        <!-- Deadline Reminders Tile -->
+        <div class="bento-card spotlight-card">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-clock-history text-danger fs-5"></i>
+                <h5 class="fw-extrabold font-heading mb-0">Upcoming Deadlines</h5>
+            </div>
+            <% if (typeof deadlines !== 'undefined' && deadlines && deadlines.length > 0) { %>
+                <div class="d-flex flex-column gap-2">
+                    <% deadlines.forEach(d => { %>
+                        <div class="d-flex align-items-center justify-content-between p-2.5 rounded-3 bg-surface-2 border" style="border-color: var(--line) !important;">
+                            <span class="small fw-semibold text-truncate me-2" style="max-width: 160px;"><%= d.title %></span>
+                            <span class="badge bg-danger-subtle text-danger"><%= new Date(d.deadline).toLocaleDateString() %></span>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="p-3 rounded-3 bg-surface-2 text-center text-muted small">
+                    <i class="bi bi-check-circle text-success fs-4 d-block mb-1"></i>
+                    No urgent deadlines pending!
+                </div>
+            <% } %>
+        </div>
+
+        <!-- Upcoming Events Preview Tile -->
+        <div class="bento-card spotlight-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-extrabold font-heading mb-0"><i class="bi bi-calendar-event text-violet me-2"></i> Campus Events</h5>
+                <a href="/events" class="small text-primary fw-semibold text-decoration-none">All Events</a>
+            </div>
+            <% if (events && events.length > 0) { %>
+                <div class="d-flex flex-column gap-2">
+                    <% events.slice(0, 2).forEach(event => { %>
+                        <div class="p-2.5 rounded-3 bg-surface-2 border" style="border-color: var(--line) !important;">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <span class="badge badge-event"><%= new Date(event.date).toLocaleDateString() %></span>
+                                <span class="small text-muted"><%= event.time %></span>
+                            </div>
+                            <h6 class="fw-bold small mb-1"><a href="/events/<%= event._id %>" class="text-decoration-none text-dark dark-text-light"><%= event.title %></a></h6>
+                            <div class="small text-muted"><i class="bi bi-geo-alt me-1"></i> <%= event.venue %></div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="text-center py-4 text-muted small">No upcoming events scheduled.</div>
             <% } %>
         </div>
     </div>

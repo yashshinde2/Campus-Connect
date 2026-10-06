@@ -1,0 +1,22 @@
+<!-- Command Palette Modal Overlay (Ctrl/Cmd + K, and "/") -->
+<div id="commandPaletteModal" class="command-palette-backdrop">
+    <div class="command-palette-card">
+        <div class="command-palette-header">
+            <i class="bi bi-search fs-5 text-muted ms-2"></i>
+            <input type="text" id="commandPaletteInput" class="command-palette-input" placeholder="Type a command or search notices, events, files..." autocomplete="off">
+            <span class="kbd-badge me-2">ESC</span>
+        </div>
+        <div id="commandPaletteResults" class="command-palette-results">
+            <!-- Results or Quick Shortcuts dynamically populated by command-palette.js -->
+        </div>
+        <div class="px-3 py-2 bg-light border-top d-flex align-items-center justify-content-between text-muted small">
+            <div>
+                <span class="kbd-badge me-1">↑</span><span class="kbd-badge me-2">↓</span> to navigate
+                <span class="kbd-badge me-1">↵</span> to select
+            </div>
+            <div>
+                <span class="kbd-badge">Ctrl K</span> or <span class="kbd-badge">/</span> anywhere
+            </div>
+        </div>
+    </div>
+</div>

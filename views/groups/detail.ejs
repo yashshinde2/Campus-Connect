@@ -1,14 +1,35 @@
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card card-custom p-4 p-md-5 mb-4">
-            <h3 class="fw-bold mb-2"><%= group.name %></h3>
-            <p class="text-muted mb-4"><%= group.description %></p>
-            <div class="border-top pt-3">
-                <h5 class="fw-bold mb-3">Members (<%= group.members.length %>)</h5>
-                <div class="d-flex flex-wrap gap-2">
-                    <% group.members.forEach(m => { %>
-                        <span class="badge bg-light text-dark border p-2"><i class="bi bi-person me-1 text-primary"></i> <%= m.name %></span>
-                    <% }) %>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="bento-card spotlight-card p-4 p-md-5 mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="icon-tile icon-tile-gradient rounded-circle" style="width: 48px; height: 48px; font-size: 1.2rem;">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div>
+                        <h2 class="fw-extrabold font-heading mb-0"><%= group.name %></h2>
+                        <span class="badge badge-academic mt-1">Study Group</span>
+                    </div>
+                </div>
+
+                <p class="text-secondary-custom fs-6 lh-lg mb-4"><%= group.description %></p>
+
+                <div class="border-top pt-4">
+                    <h5 class="fw-extrabold font-heading mb-3"><i class="bi bi-person-check text-primary me-2"></i> Group Members (<%= group.members ? group.members.length : 0 %>)</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        <% if (group.members && group.members.length > 0) { %>
+                            <% group.members.forEach(m => { %>
+                                <span class="badge bg-surface-2 text-dark dark-text-light border border-hairline p-2.5 rounded-pill d-inline-flex align-items-center gap-2">
+                                    <div class="avatar-pill" style="width:24px; height:24px; font-size:0.65rem;"><%= m.name ? m.name.charAt(0).toUpperCase() : 'U' %></div>
+                                    <span><%= m.name %></span>
+                                </span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-top">
+                    <a href="/groups" class="btn btn-aurora-secondary"><i class="bi bi-arrow-left me-1"></i> Back to Groups</a>
                 </div>
             </div>
         </div>

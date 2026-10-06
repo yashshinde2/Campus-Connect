@@ -1,31 +1,41 @@
-<h3 class="fw-bold mb-4">Contact Messages</h3>
-<div class="card card-custom p-4">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Subject</th>
-                    <th>Message</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% messages.forEach(m => { %>
+<div class="container-fluid px-lg-4 py-4">
+    <div class="mb-4">
+        <span class="badge bg-danger-subtle text-danger mb-1 fw-bold">Admin Panel</span>
+        <h1 class="display-6 fw-extrabold font-heading mb-0">Contact Messages Inbox</h1>
+    </div>
+
+    <div class="bento-card spotlight-card p-4">
+        <div class="table-responsive">
+            <table class="table-aurora">
+                <thead>
                     <tr>
-                        <td class="fw-bold"><%= m.name %></td>
-                        <td><%= m.email %></td>
-                        <td><%= m.subject %></td>
-                        <td style="max-width: 250px;"><%= m.message %></td>
-                        <td>
-                            <form action="/admin/messages/<%= m._id %>/delete" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete message?')">Delete</button>
-                            </form>
-                        </td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Actions</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% if (messages && messages.length > 0) { %>
+                        <% messages.forEach(m => { %>
+                            <tr>
+                                <td class="fw-bold"><%= m.name %></td>
+                                <td><%= m.email %></td>
+                                <td><%= m.subject %></td>
+                                <td style="max-width: 250px;"><%= m.message %></td>
+                                <td>
+                                    <form action="/admin/messages/<%= m._id %>/delete" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="return confirm('Delete message?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr><td colspan="5" class="text-center py-4 text-muted">No contact messages received.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

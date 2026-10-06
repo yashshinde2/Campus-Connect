@@ -1,80 +1,86 @@
-<div class="row mb-4 align-items-center">
-    <div class="col-md-6">
-        <h2 class="fw-bold mb-1">Study Hub & Resources</h2>
-        <p class="text-muted small mb-0">Access verified chapter notes, past papers, and semester study material</p>
+<div class="container py-4">
+    <div class="row mb-4 align-items-center gy-3">
+        <div class="col-md-6">
+            <span class="badge badge-placement mb-2">Peer Knowledge Base</span>
+            <h1 class="display-5 fw-extrabold font-heading mb-1">Study Hub & Resources</h1>
+            <p class="text-secondary-custom small mb-0">Access verified lecture notes, previous papers, and presentation decks</p>
+        </div>
+        <div class="col-md-6 d-flex gap-2">
+            <form action="/resources" method="GET" class="d-flex gap-2 flex-grow-1">
+                <input type="text" name="search" class="form-control rounded-pill ps-4" placeholder="Search subject or topic..." value="<%= currentSearch %>">
+                <button type="submit" class="btn btn-aurora rounded-pill px-4"><i class="bi bi-search"></i></button>
+            </form>
+            <a href="/resources/upload" class="btn btn-aurora btn-shine text-nowrap"><i class="bi bi-cloud-arrow-up me-1"></i> Upload Note</a>
+        </div>
     </div>
-    <div class="col-md-6 d-flex gap-2">
-        <form action="/resources" method="GET" class="d-flex gap-2 flex-grow-1">
-            <input type="text" name="search" class="form-control" placeholder="Search subject or topic..." value="<%= currentSearch %>">
-            <button type="submit" class="btn btn-primary-gradient"><i class="bi bi-search"></i></button>
+
+    <!-- Filters Bar -->
+    <div class="bento-card spotlight-card p-3 mb-4">
+        <form action="/resources" method="GET" class="row g-3">
+            <div class="col-md-4">
+                <select name="subject" class="form-select" onchange="this.form.submit()">
+                    <option value="All">All Subjects</option>
+                    <option value="Computer Networks" <%= currentSubject === 'Computer Networks' ? 'selected' : '' %>>Computer Networks</option>
+                    <option value="Operating Systems" <%= currentSubject === 'Operating Systems' ? 'selected' : '' %>>Operating Systems</option>
+                    <option value="Data Structures" <%= currentSubject === 'Data Structures' ? 'selected' : '' %>>Data Structures</option>
+                    <option value="Database Systems" <%= currentSubject === 'Database Systems' ? 'selected' : '' %>>Database Systems</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="type" class="form-select" onchange="this.form.submit()">
+                    <option value="All">All Formats</option>
+                    <option value="pdf" <%= currentType === 'pdf' ? 'selected' : '' %>>PDF Document</option>
+                    <option value="ppt" <%= currentType === 'ppt' ? 'selected' : '' %>>PPT Presentation</option>
+                    <option value="note" <%= currentType === 'note' ? 'selected' : '' %>>Notes</option>
+                    <option value="link" <%= currentType === 'link' ? 'selected' : '' %>>External Link</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="sort" class="form-select" onchange="this.form.submit()">
+                    <option value="newest" <%= currentSort === 'newest' ? 'selected' : '' %>>Newest First</option>
+                    <option value="most_downloaded" <%= currentSort === 'most_downloaded' ? 'selected' : '' %>>Most Downloaded</option>
+                </select>
+            </div>
         </form>
-        <a href="/resources/upload" class="btn btn-success text-nowrap"><i class="bi bi-cloud-arrow-up me-1"></i> Upload</a>
     </div>
-</div>
 
-<!-- Filters bar -->
-<div class="card card-custom p-3 mb-4 bg-white border-0 shadow-sm">
-    <form action="/resources" method="GET" class="row g-3">
-        <div class="col-md-4">
-            <select name="subject" class="form-select form-select-sm" onchange="this.form.submit()">
-                <option value="All">All Subjects</option>
-                <option value="Computer Networks" <%= currentSubject === 'Computer Networks' ? 'selected' : '' %>>Computer Networks</option>
-                <option value="Operating Systems" <%= currentSubject === 'Operating Systems' ? 'selected' : '' %>>Operating Systems</option>
-                <option value="Data Structures" <%= currentSubject === 'Data Structures' ? 'selected' : '' %>>Data Structures</option>
-                <option value="Database Systems" <%= currentSubject === 'Database Systems' ? 'selected' : '' %>>Database Systems</option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <select name="type" class="form-select form-select-sm" onchange="this.form.submit()">
-                <option value="All">All Formats</option>
-                <option value="pdf" <%= currentType === 'pdf' ? 'selected' : '' %>>PDF Document</option>
-                <option value="ppt" <%= currentType === 'ppt' ? 'selected' : '' %>>PPT Presentation</option>
-                <option value="note" <%= currentType === 'note' ? 'selected' : '' %>>Notes</option>
-                <option value="link" <%= currentType === 'link' ? 'selected' : '' %>>External Link</option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
-                <option value="newest" <%= currentSort === 'newest' ? 'selected' : '' %>>Newest First</option>
-                <option value="most_downloaded" <%= currentSort === 'most_downloaded' ? 'selected' : '' %>>Most Downloaded</option>
-            </select>
-        </div>
-    </form>
-</div>
-
-<!-- Resources Grid -->
-<div class="row g-4 mb-4">
-    <% if (resources && resources.length > 0) { %>
-        <% resources.forEach(resource => { %>
-            <div class="col-md-6 col-lg-4">
-                <div class="card card-custom p-4 h-100">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="icon-tile icon-tile-gradient">
-                            <i class="bi bi-file-earmark-pdf"></i>
+    <!-- Resources Grid -->
+    <div class="row g-4 mb-4">
+        <% if (resources && resources.length > 0) { %>
+            <% resources.forEach(resource => { %>
+                <div class="col-md-6 col-lg-4">
+                    <div class="bento-card spotlight-card h-100 p-4">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="icon-tile icon-tile-gradient">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                            </div>
+                            <div>
+                                <span class="badge bg-surface border text-primary text-uppercase fw-bold"><%= resource.type %></span>
+                                <small class="text-muted d-block mt-1">Semester <%= resource.semester %></small>
+                            </div>
                         </div>
-                        <div>
-                            <span class="badge bg-light text-primary border text-uppercase"><%= resource.type %></span>
-                            <small class="text-muted d-block mt-1">Semester <%= resource.semester %></small>
+
+                        <h6 class="fw-bold font-heading mb-1"><%= resource.title %></h6>
+                        <p class="text-secondary-custom small mb-3 flex-grow-1"><%= resource.description %></p>
+
+                        <div class="small text-secondary-custom mb-3 border-top pt-2">
+                            <i class="bi bi-book me-1 text-primary"></i> <strong><%= resource.subject %></strong>
                         </div>
-                    </div>
 
-                    <h6 class="fw-bold mb-1"><%= resource.title %></h6>
-                    <p class="text-muted small mb-3 flex-grow-1"><%= resource.description %></p>
-
-                    <div class="small text-muted mb-3 border-top pt-2">
-                        <i class="bi bi-book me-1 text-primary"></i> <strong><%= resource.subject %></strong>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center pt-2">
-                        <span class="small text-muted"><i class="bi bi-download me-1"></i> <%= resource.downloads %> downloads</span>
-                        <a href="/resources/<%= resource._id %>/download" class="btn btn-sm btn-primary-gradient">
-                            <i class="bi bi-download me-1"></i> Get File
-                        </a>
+                        <div class="d-flex justify-content-between align-items-center pt-2">
+                            <span class="small text-muted"><i class="bi bi-download me-1"></i> <%= resource.downloads %> downloads</span>
+                            <a href="/resources/<%= resource._id %>/download" class="btn btn-aurora btn-sm">
+                                <i class="bi bi-download me-1"></i> Download File
+                            </a>
+                        </div>
                     </div>
                 </div>
+            <% }) %>
+        <% } else { %>
+            <div class="col-12 text-center py-5 text-muted bento-card">
+                <i class="bi bi-folder-x fs-1 d-block mb-2 text-primary opacity-50"></i>
+                No approved study resources available in this criteria.
             </div>
-        <% }) %>
-    <% } else { %>
-        <div class="col-12 text-center py-5 text-muted">No approved study resources available right now.</div>
-    <% } %>
+        <% } %>
+    </div>
 </div>

@@ -1,12 +1,15 @@
-<div class="row justify-content-center">
-    <div class="col-md-6 text-center">
-        <div class="card card-custom p-4 shadow-lg">
-            <div class="avatar-initials mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
-                <%= student.name.charAt(0).toUpperCase() %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="bento-card spotlight-card p-5">
+                <div class="avatar-pill mx-auto mb-3" style="width: 84px; height: 84px; font-size: 2.2rem;">
+                    <%= student.name.charAt(0).toUpperCase() %>
+                </div>
+                <h2 class="fw-extrabold font-heading mb-1"><%= student.name %></h2>
+                <p class="text-secondary-custom mb-2"><%= student.course %> • <%= student.department %></p>
+                <p class="small text-secondary-custom mb-4"><%= student.bio || 'No bio provided.' %></p>
+                <a href="/community" class="btn btn-aurora-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Back to Forum</a>
             </div>
-            <h3 class="fw-bold mb-1"><%= student.name %></h3>
-            <p class="text-muted mb-2"><%= student.course %> • <%= student.department %></p>
-            <p class="small text-muted mb-3"><%= student.bio || 'No bio provided.' %></p>
         </div>
     </div>
 </div>

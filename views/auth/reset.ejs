@@ -1,27 +1,29 @@
-<div class="row justify-content-center align-items-center min-vh-75">
-    <div class="col-md-5 col-lg-4">
-        <div class="card card-custom p-4 shadow-lg text-center">
-            <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 54px; height: 54px; font-size: 1.5rem;">
-                <i class="bi bi-shield-check"></i>
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-md-5 col-lg-4">
+            <div class="bento-card spotlight-card p-4 p-md-5 text-center">
+                <div class="icon-tile icon-tile-gradient rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; font-size: 1.3rem;">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h3 class="fw-extrabold font-heading mb-2">Reset Password</h3>
+                <p class="text-secondary-custom small mb-4">Enter your new secure password below</p>
+
+                <form action="/auth/reset/<%= token %>" method="POST">
+                    <div class="form-floating mb-3 text-start">
+                        <input type="password" name="password" class="form-control" id="newPass" placeholder="New Password" required>
+                        <label for="newPass">New Password</label>
+                    </div>
+
+                    <div class="form-floating mb-4 text-start">
+                        <input type="password" name="confirmPassword" class="form-control" id="confirmNewPass" placeholder="Confirm New Password" required>
+                        <label for="confirmNewPass">Confirm New Password</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-aurora btn-shine w-100 py-3 justify-content-center mb-3">
+                        Save New Password <i class="bi bi-check2 me-1"></i>
+                    </button>
+                </form>
             </div>
-            <h3 class="fw-bold mb-2">Reset Password</h3>
-            <p class="text-muted small mb-4">Enter your new secure password below</p>
-
-            <form action="/auth/reset/<%= token %>" method="POST">
-                <div class="form-floating mb-3">
-                    <input type="password" name="password" class="form-control" id="newPass" placeholder="New Password" required>
-                    <label for="newPass">New Password</label>
-                </div>
-
-                <div class="form-floating mb-4">
-                    <input type="password" name="confirmPassword" class="form-control" id="confirmNewPass" placeholder="Confirm New Password" required>
-                    <label for="confirmNewPass">Confirm New Password</label>
-                </div>
-
-                <button type="submit" class="btn btn-primary-gradient w-100 py-2 mb-3">
-                    Save New Password <i class="bi bi-check2 me-1"></i>
-                </button>
-            </form>
         </div>
     </div>
 </div>

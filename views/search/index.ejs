@@ -1,38 +1,41 @@
-<div class="row justify-content-center">
-    <div class="col-lg-10">
-        <h3 class="fw-bold mb-3">Global Search Results</h3>
-        <% if (query) { %>
-            <p class="text-muted mb-4">Showing search results for "<strong class="text-primary"><%= query %></strong>"</p>
-        <% } %>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <span class="badge badge-academic mb-2">Search Center</span>
+            <h1 class="display-5 fw-extrabold font-heading mb-3">Global Search Results</h1>
+            <% if (query) { %>
+                <p class="text-secondary-custom mb-4">Showing search results for "<strong class="text-primary"><%= query %></strong>"</p>
+            <% } %>
 
-        <!-- Notices -->
-        <% if (results.notices && results.notices.length > 0) { %>
-            <div class="card card-custom p-4 mb-4">
-                <h5 class="fw-bold text-primary mb-3"><i class="bi bi-megaphone me-2"></i> Notices (<%= results.notices.length %>)</h5>
-                <div class="list-group list-group-flush">
-                    <% results.notices.forEach(n => { %>
-                        <a href="/notices/<%= n._id %>" class="list-group-item list-group-item-action px-0 border-0">
-                            <div class="fw-bold"><%= n.title %></div>
-                            <small class="text-muted"><%= n.description.substring(0, 100) %>...</small>
-                        </a>
-                    <% }) %>
+            <!-- Notices Results -->
+            <% if (results && results.notices && results.notices.length > 0) { %>
+                <div class="bento-card spotlight-card p-4 mb-4">
+                    <h5 class="fw-bold text-primary font-heading mb-3"><i class="bi bi-megaphone me-2"></i> Notices (<%= results.notices.length %>)</h5>
+                    <div class="d-flex flex-column gap-2">
+                        <% results.notices.forEach(n => { %>
+                            <a href="/notices/<%= n._id %>" class="p-3 rounded-3 bg-surface-2 text-decoration-none border border-hairline">
+                                <div class="fw-bold text-dark dark-text-light"><%= n.title %></div>
+                                <small class="text-muted"><%= n.description ? n.description.substring(0, 110) : '' %>...</small>
+                            </a>
+                        <% }) %>
+                    </div>
                 </div>
-            </div>
-        <% } %>
+            <% } %>
 
-        <!-- Events -->
-        <% if (results.events && results.events.length > 0) { %>
-            <div class="card card-custom p-4 mb-4">
-                <h5 class="fw-bold text-violet mb-3"><i class="bi bi-calendar-event me-2"></i> Events (<%= results.events.length %>)</h5>
-                <div class="list-group list-group-flush">
-                    <% results.events.forEach(e => { %>
-                        <a href="/events/<%= e._id %>" class="list-group-item list-group-item-action px-0 border-0">
-                            <div class="fw-bold"><%= e.title %></div>
-                            <small class="text-muted"><%= e.venue %> • <%= new Date(e.date).toLocaleDateString() %></small>
-                        </a>
-                    <% }) %>
+            <!-- Events Results -->
+            <% if (results && results.events && results.events.length > 0) { %>
+                <div class="bento-card spotlight-card p-4 mb-4">
+                    <h5 class="fw-bold text-violet font-heading mb-3"><i class="bi bi-calendar-event me-2"></i> Events (<%= results.events.length %>)</h5>
+                    <div class="d-flex flex-column gap-2">
+                        <% results.events.forEach(e => { %>
+                            <a href="/events/<%= e._id %>" class="p-3 rounded-3 bg-surface-2 text-decoration-none border border-hairline">
+                                <div class="fw-bold text-dark dark-text-light"><%= e.title %></div>
+                                <small class="text-muted"><%= e.venue %> • <%= new Date(e.date).toLocaleDateString() %></small>
+                            </a>
+                        <% }) %>
+                    </div>
                 </div>
-            </div>
-        <% } %>
+            <% } %>
+        </div>
     </div>
 </div>

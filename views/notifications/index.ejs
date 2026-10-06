@@ -1,26 +1,35 @@
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card card-custom p-4 mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="fw-bold mb-0"><i class="bi bi-bell text-primary me-2"></i> Notifications</h4>
-                <form action="/notifications/mark-all" method="POST">
-                    <button type="submit" class="btn btn-sm btn-soft">Mark All as Read</button>
-                </form>
-            </div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="bento-card spotlight-card p-4 p-md-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="icon-tile icon-tile-gradient" style="width:38px; height:38px; font-size:1rem;"><i class="bi bi-bell-fill"></i></div>
+                        <h3 class="fw-extrabold font-heading mb-0">Notifications Center</h3>
+                    </div>
+                    <form action="/notifications/mark-all" method="POST">
+                        <button type="submit" class="btn btn-aurora-soft btn-sm"><i class="bi bi-check2-all me-1"></i> Mark All as Read</button>
+                    </form>
+                </div>
 
-            <div class="list-group list-group-flush">
-                <% if (notifications && notifications.length > 0) { %>
-                    <% notifications.forEach(n => { %>
-                        <a href="<%= n.link %>" class="list-group-item list-group-item-action p-3 mb-2 rounded-3 <%= n.isRead ? 'bg-light' : 'bg-white border-start border-4 border-primary shadow-sm' %>">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-semibold text-dark"><%= n.message %></span>
-                                <small class="text-muted"><%= new Date(n.createdAt).toLocaleDateString() %></small>
-                            </div>
-                        </a>
-                    <% }) %>
-                <% } else { %>
-                    <div class="text-center py-5 text-muted">No notifications right now.</div>
-                <% } %>
+                <div class="d-flex flex-column gap-2">
+                    <% if (notifications && notifications.length > 0) { %>
+                        <% notifications.forEach(n => { %>
+                            <a href="<%= n.link || '#' %>" class="text-decoration-none p-3 rounded-3 border border-hairline spotlight-card transition-all d-flex justify-content-between align-items-center <%= n.isRead ? 'bg-surface-2 opacity-75' : 'bg-surface shadow-sm border-start border-4 border-primary' %>">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi <%= n.isRead ? 'bi-check-circle text-muted' : 'bi-bell-fill text-primary' %> fs-5"></i>
+                                    <span class="fw-semibold text-dark dark-text-light"><%= n.message %></span>
+                                </div>
+                                <small class="text-muted text-nowrap ms-3"><%= new Date(n.createdAt).toLocaleDateString() %></small>
+                            </a>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-bell-slash fs-1 d-block mb-2 text-primary opacity-50"></i>
+                            No notifications right now. All caught up!
+                        </div>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>

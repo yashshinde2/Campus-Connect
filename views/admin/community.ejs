@@ -1,31 +1,41 @@
-<h3 class="fw-bold mb-4">Community Content Moderation</h3>
-<div class="card card-custom p-4">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Topic</th>
-                    <th>Author</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% posts.forEach(p => { %>
+<div class="container-fluid px-lg-4 py-4">
+    <div class="mb-4">
+        <span class="badge bg-danger-subtle text-danger mb-1 fw-bold">Admin Panel</span>
+        <h1 class="display-6 fw-extrabold font-heading mb-0">Community Forum Moderation</h1>
+    </div>
+
+    <div class="bento-card spotlight-card p-4">
+        <div class="table-responsive">
+            <table class="table-aurora">
+                <thead>
                     <tr>
-                        <td class="fw-bold"><%= p.title %></td>
-                        <td><span class="badge bg-light text-dark border"><%= p.topic %></span></td>
-                        <td><%= p.author ? p.author.name : 'Unknown' %></td>
-                        <td><%= new Date(p.createdAt).toLocaleDateString() %></td>
-                        <td>
-                            <form action="/admin/community/<%= p._id %>/delete" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete post?')">Delete</button>
-                            </form>
-                        </td>
+                        <th>Title</th>
+                        <th>Topic</th>
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% if (posts && posts.length > 0) { %>
+                        <% posts.forEach(p => { %>
+                            <tr>
+                                <td class="fw-bold"><%= p.title %></td>
+                                <td><span class="badge badge-category badge-general"><%= p.topic %></span></td>
+                                <td><%= p.author ? p.author.name : 'Student' %></td>
+                                <td><%= new Date(p.createdAt).toLocaleDateString() %></td>
+                                <td>
+                                    <form action="/admin/community/<%= p._id %>/delete" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="return confirm('Delete post?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr><td colspan="5" class="text-center py-4 text-muted">No community posts to moderate.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

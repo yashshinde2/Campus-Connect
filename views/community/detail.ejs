@@ -1,58 +1,60 @@
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card card-custom p-4 p-md-5 mb-4">
-            <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="avatar-initials">
-                    <%= post.author ? post.author.name.charAt(0).toUpperCase() : 'U' %>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="bento-card spotlight-card p-4 p-md-5 mb-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="avatar-pill" style="width: 48px; height: 48px; font-size: 1.1rem;">
+                        <%= post.author ? post.author.name.charAt(0).toUpperCase() : 'U' %>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-5 text-dark dark-text-light"><%= post.author ? post.author.name : 'Student' %></div>
+                        <small class="text-muted"><%= new Date(post.createdAt).toLocaleDateString() %></small>
+                    </div>
+                    <span class="badge badge-category badge-general ms-auto"><%= post.topic %></span>
                 </div>
-                <div>
-                    <div class="fw-bold"><%= post.author ? post.author.name : 'Student' %></div>
-                    <small class="text-muted"><%= new Date(post.createdAt).toLocaleDateString() %></small>
+
+                <h1 class="display-6 fw-extrabold font-heading mb-3"><%= post.title %></h1>
+                <div class="fs-6 lh-lg text-secondary-custom mb-4" style="white-space: pre-line;">
+                    <%= post.content %>
                 </div>
-                <span class="badge bg-light text-primary border ms-auto"><%= post.topic %></span>
-            </div>
 
-            <h3 class="fw-bold mb-3"><%= post.title %></h3>
-            <div class="fs-6 lh-lg text-dark mb-4" style="white-space: pre-line;">
-                <%= post.content %>
-            </div>
-
-            <% if (user && (user._id.toString() === post.author._id.toString() || user.role === 'admin')) { %>
-                <form action="/community/<%= post._id %>/delete" method="POST" class="d-inline mb-4">
-                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this post?')">
-                        <i class="bi bi-trash me-1"></i> Delete Post
-                    </button>
-                </form>
-            <% } %>
-
-            <hr class="my-4">
-
-            <h5 class="fw-bold mb-4">Comments (<%= comments.length %>)</h5>
-
-            <!-- Comment Input -->
-            <form action="/community/<%= post._id %>/comment" method="POST" class="mb-4">
-                <div class="form-floating mb-2">
-                    <textarea name="content" class="form-control" id="cInput" style="height: 80px;" placeholder="Comment" required></textarea>
-                    <label for="cInput">Write a comment...</label>
-                </div>
-                <button type="submit" class="btn btn-primary-gradient btn-sm px-3">Post Comment</button>
-            </form>
-
-            <!-- Comments List -->
-            <div class="d-flex flex-column gap-3">
-                <% if (comments && comments.length > 0) { %>
-                    <% comments.forEach(comment => { %>
-                        <div class="p-3 bg-light rounded-3 border">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <span class="fw-bold small"><%= comment.author ? comment.author.name : 'Student' %></span>
-                                <small class="text-muted"><%= new Date(comment.createdAt).toLocaleDateString() %></small>
-                            </div>
-                            <p class="small mb-0 text-dark"><%= comment.content %></p>
-                        </div>
-                    <% }) %>
-                <% } else { %>
-                    <div class="text-muted small text-center py-3">No comments yet. Be the first to reply!</div>
+                <% if (user && (user._id.toString() === post.author._id.toString() || user.role === 'admin')) { %>
+                    <form action="/community/<%= post._id %>/delete" method="POST" class="d-inline mb-4">
+                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="return confirm('Delete this post?')">
+                            <i class="bi bi-trash me-1"></i> Delete Post
+                        </button>
+                    </form>
                 <% } %>
+
+                <hr class="my-4" style="border-color: var(--line);">
+
+                <h4 class="fw-extrabold font-heading mb-4"><i class="bi bi-chat-square-text me-2 text-primary"></i> Comments (<%= comments ? comments.length : 0 %>)</h4>
+
+                <!-- Comment Form -->
+                <form action="/community/<%= post._id %>/comment" method="POST" class="mb-4">
+                    <div class="form-floating mb-2">
+                        <textarea name="content" class="form-control" id="cInput" style="height: 90px;" placeholder="Write a comment..." required></textarea>
+                        <label for="cInput">Write a comment...</label>
+                    </div>
+                    <button type="submit" class="btn btn-aurora btn-sm rounded-pill px-4">Post Comment</button>
+                </form>
+
+                <!-- Comments Stack -->
+                <div class="d-flex flex-column gap-3">
+                    <% if (comments && comments.length > 0) { %>
+                        <% comments.forEach(comment => { %>
+                            <div class="p-3 rounded-3 bg-surface-2 border border-hairline">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-bold small text-dark dark-text-light"><%= comment.author ? comment.author.name : 'Student' %></span>
+                                    <small class="text-muted"><%= new Date(comment.createdAt).toLocaleDateString() %></small>
+                                </div>
+                                <p class="small mb-0 text-secondary-custom"><%= comment.content %></p>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="text-muted small text-center py-4 bg-surface-2 rounded-3">No comments yet. Be the first to reply!</div>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>
