@@ -100,8 +100,3 @@ The application will be accessible at `http://localhost:3000`.
 - `public/`: Static files (CSS, JS, images, uploads).
 - `middleware/`: Authentication and error handling.
 
-# Student Login
-alex@campusconnect.edu / password123 
-
-# Admin Login
-admin@campusconnect.edu / adminpassword123
