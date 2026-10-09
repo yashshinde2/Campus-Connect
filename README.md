@@ -1,4 +1,4 @@
-# Campus Connect
+# Campus-Connect
 
 Campus Connect is a full-stack student collaboration and campus information platform. It provides a centralized hub for students to access campus notices, upcoming events, study materials, and peer interaction, while offering administrators comprehensive content and user management capabilities.
 
